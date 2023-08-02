@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>BitNews | Register</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="">
+
+
+    <link rel="stylesheet" href="~/assets/sass/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/sass/login-register.css" />
+
+    <link rel="shortcut icon" href="~/assets/img/logo-bitnews.png">
+    <link rel="apple-touch-icon" href="~/assets/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/assets/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/assets/img/apple-touch-icon-114x114.png">
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet"
+          type="text/css" />
+</head>
+
+<body>
+
+    <div class="main">
+        <a asp-controller="Home" asp-action="Index" class="logo d-flex justify-content-center mb-4 my-1">
+            <img class="logo-img" src="~/assets/img/logo-bitnews.png" alt="BitNews Logo">
+        </a>
+
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="signup-form" class="signup-form">
+                        <h2 class="form-title">Create an Account</h2>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-input" placeholder="Fullname" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-input" placeholder="Username" required />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Email" autocomplete="username" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-input" name="password"
+                                   autocomplete="current-password" required="" id="id_password1">
+                            <i class="fa-solid far fa-eye-slash" id="togglePassword1"></i>
+                            <i class="far fa-eye d-none" id="togglePassword2"></i>
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="password" placeholder="Repeat your Password" class="form-input" name="password"
+                                   autocomplete="current-password" required="" id="id_password2">
+                            <i class="fa-solid far fa-eye-slash" id="togglePassword3"></i>
+                            <i class="far fa-eye d-none" id="togglePassword4"></i>
+                        </div>
+                        <p class="forgot mb-4">
+                            <a href="register.html" class="loginhere-link">Forgot Password?</a>
+                        </p>
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up" />
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Have already an account ? <a asp-controller="Account" asp-action="SignIn" class="loginhere-link">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/jquery.marquee.min.js"></script>
+    <script src="~/assets/js/login-register.js"></script>
+</body>
+
+</html>

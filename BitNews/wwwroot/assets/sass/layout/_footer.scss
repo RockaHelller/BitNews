@@ -1,0 +1,53 @@
+.footer {
+
+  .widget-title {
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin-bottom: 34px;
+  }
+
+  a:not(.social) {
+    color: $text-color;
+  }
+
+  a:not(.social):hover {
+    color: $heading-color;
+    text-decoration: underline;
+  }
+
+  &-widgets {
+    padding: 46px 0 70px;
+    border-bottom: 1px solid $border-color;
+    border-top: 1px solid $border-color;
+
+    @include bp-lg-down {
+      & > .row > div:not(:last-child) {
+        margin-bottom: 50px;
+      }
+    }
+  }  
+}
+
+
+.donate {
+  &-list {
+    line-height: 1.9;
+  }
+
+  &-item {
+    word-break: break-word;
+  }
+
+  &_label {
+    color: $heading-color;
+  }
+}
+
+
+.footer-bottom {
+  padding: 21px 0;
+}
+
+.copyright {
+  font-size: 0.8125rem;
+}

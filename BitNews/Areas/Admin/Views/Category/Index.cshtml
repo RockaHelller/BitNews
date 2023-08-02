@@ -1,0 +1,57 @@
+﻿@model List<CategoryVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container my-3">
+    <h2 class="text-center">Categories</h2>
+@*    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("SuperAdmin"))
+        {*@
+            <div class="create-btn ">
+                <a asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
+            </div>
+   @*     }
+    }*@
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Options
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:left !important;" class=" py-1 vertical-center">
+                            <img src="~/assets/img/Category/@item.Image" alt="image" style="width:32%;height:16vh;" />
+                        </td>
+                        <td class="py-1">
+                            @Html.Raw(item.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary btn-rounded btn-fw">Detail</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-rounded btn-fw">Edit</a>
+                            <form style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-danger btn-rounded btn-fw">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

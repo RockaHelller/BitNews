@@ -1,0 +1,26 @@
+﻿    @model CategoryCreateVM
+    @{
+        ViewData["Title"] = "Create";
+    }
+
+    <div class="container my-5">
+        <form method="post" asp-controller="Category" asp-action="Create" enctype="multipart/form-data">
+            <input asp-for="Image" class="form-control" />
+            <sp anasp-validation-for="Image" class="text-danger d-block"></sp>
+            <input class="form-control" placeholder="Category Name" asp-for="Name" id="category-name" rows="3"></input>
+            <span class="text-danger d-block" asp-validation-for="Name"></span>
+
+            <button type="submit" class="btn btn-success btn-rounded btn-fw mt-3">Submit</button>
+            <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>
+        </form>
+    </div>
+
+
+
+@*@section AdminScripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("category-name");
+    </script>
+        }*@
