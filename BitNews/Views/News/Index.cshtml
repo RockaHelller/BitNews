@@ -1,5 +1,5 @@
 ﻿@using BitNews.Areas.Admin.ViewModels.News;
-@model Paginate<NewsVM>
+@model List<NewsVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -80,229 +80,65 @@
                 </div>
 
                 <div class="col-md-8">
+
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
                     <div class="row" id="isotope-grid">
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_1.jpg" class="entry-img" alt="" />
+                                <div class="col-lg-4 col-md-6">
+                                    <article class="entry">
+                                        <div class="entry-img-holder">
+                                            <a href="single-post.html">
+                                                <div class="thumb-container thumb-65">
+                                                    <img src="~/assets/img/News/@item.Image" class="entry-img" alt="" />
+                                                </div>
+                                            </a>
                                         </div>
+                                        <div class="entry-body">
+                                            <div class="entry-header">
+                                                <h2 class="entry-title entry-title--medium">
+                                                    <a href="single-post.html">@item.Title</a>
+                                                </h2>
+                                                <ul class="entry-meta">
+                                                    <li class="entry-meta-author">
+                                                        <a href="#">
+                                                            <span>by</span>
+                                                            <span class="entry-meta-author-name">DeoThemes</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="entry-meta-date">21 October, 2018</li>
+                                                </ul>
+                                            </div>
+                                            <div class="entry-excerpt">
+                                                <p>
+                                                    To some people, the blockchain technology is a lot more promising than the cryptocurrency it
+                                                    was
+                                                    designed to support.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+
+                   
+                    </div>
+
+                            <nav class="show-more">
+                                <div class="show-more-link text-center">
+                                    <a href="#" class="btn btn-lg btn-color">
+                                        <span>more news</span>
                                     </a>
                                 </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">Growth Hacking Your ICO – 7 Steps to Successful Token Sale</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_2.jpg" class="entry-img " alt="" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">How to Buy Litecoin: Get your First Digital Silver</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_3.jpg" class="entry-img " alt="" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">Changelly: The Simple Way to Get on Board with Cryptocurrency</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_4.jpg" class="entry-img " alt="" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">The Simple Way to Get on Board with Cryptocurrency</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_5.jpg" class="entry-img " alt="" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">The Simple Way to Get on Board with Cryptocurrency</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6">
-                            <article class="entry">
-                                <div class="entry-img-holder">
-                                    <a href="single-post.html">
-                                        <div class="thumb-container thumb-65">
-                                            <img src="assets/img/blog/post_7.jpg" class="entry-img " alt="" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="entry-body">
-                                    <div class="entry-header">
-                                        <h2 class="entry-title entry-title--medium">
-                                            <a href="single-post.html">The Simple Way to Get on Board with Cryptocurrency</a>
-                                        </h2>
-                                        <ul class="entry-meta">
-                                            <li class="entry-meta-author">
-                                                <a href="#">
-                                                    <span>by</span>
-                                                    <span class="entry-meta-author-name">DeoThemes</span>
-                                                </a>
-                                            </li>
-                                            <li class="entry-meta-date">21 October, 2018</li>
-                                        </ul>
-                                    </div>
-                                    <div class="entry-excerpt">
-                                        <p>
-                                            To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                            was
-                                            designed to support.
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
+                            </nav>
+                            }
+                        }
+                        else
+                        {
+                            <p>No news available.</p>
+                        }
 
 
-
-                    </div> <!-- end row -->
-                    <!-- Pagination -->
-                    <nav class="show-more">
-                        <div class="show-more-link text-center">
-                            <a href="#" class="btn btn-lg btn-color">
-                                <span>more news</span>
-                            </a>
-                        </div>
-                    </nav>
                 </div>
 
             </div>
@@ -320,7 +156,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="widget">
                             <a href="index.html">
-                                <img src="assets/img/logo-bitnews.png" class="logo-img" alt="">
+                                <img src="~/assets/img/logo-bitnews.png" class="logo-img" alt="">
                             </a>
                             <p class="mt-20 mb-30">
                                 Cryptocurrency news blog and investment strategy guide. All you need to know

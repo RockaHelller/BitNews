@@ -39,6 +39,7 @@ builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<ITagService, TagService>();
 
 
 

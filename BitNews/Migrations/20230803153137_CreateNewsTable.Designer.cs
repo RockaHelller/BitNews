@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BitNews.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230802192102_CreatedNewsTable")]
-    partial class CreatedNewsTable
+    [Migration("20230803153137_CreateNewsTable")]
+    partial class CreateNewsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,6 +137,10 @@ namespace BitNews.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SoftDelete")
                         .HasColumnType("bit");

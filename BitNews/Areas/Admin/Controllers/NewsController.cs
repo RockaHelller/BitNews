@@ -1,9 +1,9 @@
-﻿using BitNews.Areas.Admin.ViewModels.News;
+﻿
+using BitNews.Areas.Admin.ViewModels.News;
 using BitNews.Data;
 using BitNews.Helpers;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -64,10 +64,11 @@ namespace BitNews.Areas.Admin.Controllers
 				model.Add(new NewsVM
 				{
 					Id = item.Id,
-					Title = item.Title,
 					Image = item.Images?.FirstOrDefault()?.Image,
-					CategoryName = item.Category?.Name,
+					Title = item.Title,
+                    Description = item.Description,
 					Article = item.Article,
+					CategoryName = item.Category?.Name,
 
 				});
 			}
@@ -82,6 +83,7 @@ namespace BitNews.Areas.Admin.Controllers
         //[Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create()
         {
+
             var categories = await _categoryService.GetAll();
 
             var tags = await _context.Tags.ToListAsync();
@@ -164,6 +166,7 @@ namespace BitNews.Areas.Admin.Controllers
                 Id = existNews.Id,
                 Title = existNews.Title,
                 Article = existNews.Article,
+                Description = existNews.Description,
                 CategoryId = existNews.CategoryId,
                 Tags = tagCheckBoxes,
             };
@@ -200,10 +203,9 @@ namespace BitNews.Areas.Admin.Controllers
             await _newsService.EditAsync(model);
 
             return RedirectToAction(nameof(Index));
-
-
-
         }
+
+
 
         [HttpGet]
 		public async Task<IActionResult> Detail(int? id)

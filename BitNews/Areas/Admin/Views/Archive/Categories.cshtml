@@ -20,6 +20,11 @@
 
 <div class="container my-3">
     <h2 class="text-center">Archive</h2>
+    <div class="delete-btn ">
+        <form method="post" asp-action="DeleteAll" onsubmit="return confirm('Are you sure you want to delete all categories?');">
+            <button type="submit" class="btn btn-danger btn-rounded btn-fw">Delete All</button>
+        </form>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -49,6 +54,12 @@
                             <form style="display: inline-block;" method="post" asp-action="ExtractCategory" asp-route-id="@item.Id">
                                 <button type="submit" class="btn btn-primary btn-rounded btn-fw">Extract</button>
                             </form>
+                            <form style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                <form style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-danger btn-rounded btn-fw" onclick="return confirm('Are you sure you want to permanently delete this category?');">Delete</button>
+                                </form>
+                            </form>
+
                         </td>
                     </tr>
                 }

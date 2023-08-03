@@ -8,13 +8,8 @@ namespace BitNews.Services.Interfaces
         Task<IEnumerable<News>> GetAllWithIncludesAsync();
         Task<News> GetByIdAsync(int? id);
         Task<News> GetByIdWithAllIncludes(int id);
-        NewsDetailVM GetMappedData(News product);
-        Task EditAsync(int productId, NewsEditVM model);
-        Task AddAsync(NewsCreateVM model);
+        NewsDetailVM GetMappedData(News news);
         Task CreateAsync(NewsCreateVM model);
         Task EditAsync(NewsEditVM model);
-
-
-
     }
 }

@@ -7,18 +7,6 @@ namespace BitNews.Services
 {
     public class CategoryService : ICategoryService
     {
-        //private readonly AppDbContext _context;
-
-        //public CategoryService(AppDbContext context)
-        //{
-        //    _context = context;
-        //}
-
-        //public async Task<List<Category>> GetAll()
-        //{
-        //    return await _context.Categories.ToListAsync();
-        //}
-
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
 

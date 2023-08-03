@@ -136,6 +136,10 @@ namespace BitNews.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("SoftDelete")
                         .HasColumnType("bit");
 

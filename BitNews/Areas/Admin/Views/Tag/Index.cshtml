@@ -1,4 +1,4 @@
-﻿@model List<CategoryVM>
+﻿@model List<TagVM>
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,17 +9,10 @@
         width: 80px !important;
     }
 
-
-    img {
-        border-radius: 0px !important;
-        width: 100% !important;
-        height: 100% !important;
-    }
-
 </style>
 
 <div class="container my-3">
-    <h2 class="text-center">Categories</h2>
+    <h2 class="text-center">Tags</h2>
     @*    @if (User.Identity.IsAuthenticated)
     {
     if (User.IsInRole("SuperAdmin"))
@@ -35,9 +28,6 @@
             <thead>
                 <tr>
                     <th>
-                        Image
-                    </th>
-                    <th>
                         Name
                     </th>
                     <th>
@@ -49,9 +39,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td style="text-align:left !important; max-height: 300px !important;" class=" py-1 vertical-center">
-                            <img src="~/assets/img/Category/@item.Image" alt="image" style="max-height: 150px !important;" />
-                        </td>
                         <td class="py-1">
                             @Html.Raw(item.Name)
                         </td>
@@ -63,7 +50,6 @@
                         </td>
                     </tr>
                 }
-
             </tbody>
         </table>
     </div>

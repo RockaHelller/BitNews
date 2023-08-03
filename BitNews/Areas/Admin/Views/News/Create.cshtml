@@ -6,7 +6,9 @@
 }
 
 <style>
-   
+    .cke_button__save_icon {
+        display: none;
+    }
 </style>
 
 <div class="container my-5">
@@ -27,9 +29,10 @@
         <input class="form-control" placeholder="News Title" name="Title" asp-for="Title" required />
         <span class="text-danger d-block" asp-validation-for="Title"></span>
 
+        <textarea class="form-control" placeholder="Description" name="Description" asp-for="Description" rows="3" required></textarea>
+        <span class="text-danger d-block" asp-validation-for="Description"></span>
 
         <textarea class="form-control" name="Article" asp-for="Article" id="article-content" rows="3" required></textarea>
-        @*<textarea class="form-control" placeholder="Article" name="Article" asp-for="Title" rows="3" required></textarea>*@
         <span class="text-danger d-block" asp-validation-for="Article"></span>
 
 
@@ -56,7 +59,6 @@
 
 
 @section AdminScripts{
-    <partial name="_ValidationScriptsPartial" />
     <script src="~/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace("article-content");
