@@ -131,7 +131,7 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="images/faces/face5.jpg" alt="profile" />
+                            <img src="images/faces/face5.jpg" style="width:32px !important; height: 32px!important;" alt="profile" />
                             <span class="nav-profile-name">Louis Barnett</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -187,7 +187,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="News" asp-action="Index">
+                        <a class="nav-link" asp-area="Admin" asp-controller="News" asp-action="Index">
                             <i class="fal fa-newspaper menu-icon"></i>
                             <span class="menu-title">News</span>
                         </a>
@@ -230,23 +230,14 @@
             </nav>
         @RenderBody()
         </div>
-        <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
     <script src="~/admin/vendors/base/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
     <script src="~/admin/vendors/chart.js/Chart.min.js"></script>
     <script src="~/admin/vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="~/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
     <script src="~/admin/js/off-canvas.js"></script>
     <script src="~/admin/js/hoverable-collapse.js"></script>
     <script src="~/admin/js/template.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
     <script src="~/admin/js/data-table.js"></script>
     <script src="~/admin/js/jquery.dataTables.js"></script>
     <script src="~/admin/js/dataTables.bootstrap4.js"></script>
@@ -255,7 +246,6 @@
 
     @await RenderSectionAsync("AdminScripts", required: false)
     <script src="~/admin/js/dashboard.js"></script>
-    <!-- End custom js for this page-->
 </body>
 
 </html>

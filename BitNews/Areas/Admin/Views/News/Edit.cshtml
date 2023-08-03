@@ -1,0 +1,55 @@
+﻿@model NewsEditVM
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<style>
+
+</style>
+
+<div class="container my-5">
+    <form method="post" asp-controller="News" asp-action="Edit" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+
+        <input type="file" asp-for="Image" class="form-control" multiple />
+        @*<span asp-validation-for="Image" class="text-danger d-block"></span>*@
+
+        <select class="form-control" asp-for="CategoryId" id="category-select" required>
+            <option value="">Select Category</option>
+            @foreach (var category in ViewBag.categories)
+            {
+                <option value="@category.Value" selected="@((category.Value == Model.CategoryId.ToString()).ToString().ToLower())">@category.Text</option>
+
+            }
+
+        </select>
+        <span class="text-danger d-block" asp-validation-for="CategoryId"></span>
+
+
+        <input class="form-control" placeholder="News Title" name="Title" asp-for="Title" required />
+        <span class="text-danger d-block" asp-validation-for="Title"></span>
+
+        <textarea class="form-control" placeholder="Article" name="Article" asp-for="Article" rows="3" required>@Model.Article</textarea>
+        <span class="text-danger d-block" asp-validation-for="Article"></span>
+
+        <div class="form-group mt-3">
+            <label>Tags</label>
+            @for (var i = 0; i < Model.Tags?.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="checkbox" asp-for="@Model.Tags[i].IsChecked" class="form-check-input">
+                    <label class="form-check-label" asp-for="@Model.Tags[i].IsChecked">
+                        @Model.Tags[i].Value
+                    </label>
+                    <input type="hidden" asp-for="@Model.Tags[i].Id">
+                    <input type="hidden" asp-for="@Model.Tags[i].Value">
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-success btn-rounded btn-fw mt-3">Update</button>
+        <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>
+    </form>
+</div>

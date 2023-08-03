@@ -1,164 +1,259 @@
-﻿//using BitNews.Areas.Admin.Views.News;
-//using BitNews.Data;
-//using BitNews.Helpers;
-//using BitNews.Models;
-//using BitNews.Services.Interfaces;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using Microsoft.EntityFrameworkCore;
+﻿using BitNews.Areas.Admin.ViewModels.News;
+using BitNews.Data;
+using BitNews.Helpers;
+using BitNews.Models;
+using BitNews.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
-//namespace BitNews.Areas.Admin.Controllers
-//{
-//	[Area("Admin")]
-//	//[Authorize]
-//	public class ProductController : Controller
-//	{
-//		private readonly INewsService _newsService;
-//		private readonly ISettingService _settingService;
-//		private readonly ICategoryService _categoryService;
-//		private readonly AppDbContext _context;
-
-
-
-//		public ProductController(INewsService newsService,
-//									 ISettingService settingService,
-//									 ICategoryService categoryService,
-//									 AppDbContext context)
-//		{
-//			_newsService = newsService;
-//			_settingService = settingService;
-//			_categoryService = categoryService;
-//			_context = context;
-
-//		}
-
-//		private async Task GetAllSelectOptions()
-//		{
-//			ViewBag.categories = await GetCategories();
-//		}
-//		private async Task<SelectList> GetCategories()
-//		{
-//			IEnumerable<Category> categories = await _categoryService.GetAll();
-//			return new SelectList(categories, "Id", "Name");
-//		}
-
-//		[HttpGet]
-//		public async Task<IActionResult> Index(int page = 1)
-//		{
-//			int pageSize = 10;
-
-//			var products = await _newsService.GetAllWithIncludesAsync();
-
-//			int totalItems = products.Count();
-//			int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-//			var pagedProducts = products
-//				.Skip((page - 1) * pageSize)
-//				.Take(pageSize)
-//				.ToList();
-
-//			List<NewsVM> model = new List<NewsVM>();
-//			foreach (var item in pagedProducts)
-//			{
-//				model.Add(new NewsVM
-//				{
-//					Id = item.Id,
-//					Title = item.Title,
-//					Image = item.Images?.FirstOrDefault()?.Image,
-//					CategoryName = item.Category?.Name,
-//					Article = item.Article,
-
-//				});
-//			}
-
-//			var paginatedModel = new Paginate<NewsVM>(model, page, totalPages);
-
-//			return View(paginatedModel);
-//		}
-
-
-//		[HttpGet]
-//		public async Task<IActionResult> Detail(int? id)
-//		{
-//			if (id is null)
-//				return BadRequest();
-
-//			var product = await _newsService.GetByIdWithAllIncludes(id.Value);
-
-//			if (product is null)
-//				return NotFound();
-
-//			var productDetail = _newsService.GetMappedData(product);
-
-//			return View(productDetail);
-//		}
-
-
-//		[HttpGet]
-//		//[Authorize(Roles = "SuperAdmin")]
-//		public async Task<IActionResult> Create()
-//		{
-//			var categories = await _categoryService.GetAll();
-
-//			var tags = await _context.Tags.ToListAsync();
-//			List<TagCheckBox> tagCheckBoxes = new();
-
-//			foreach (var item in tags)
-//			{
-//				tagCheckBoxes.Add(new TagCheckBox { Id = item.Id, Value = item.Name, IsChecked = false });
-//			}
-
-
-//			ViewBag.categories = categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
-
-
-//			var model = new NewsCreateVM
-//			{
-//				Tags = tagCheckBoxes
-//			};
-
-//			return View(model);
-//		}
+namespace BitNews.Areas.Admin.Controllers
+{
+	[Area("Admin")]
+	//[Authorize]
+	public class NewsController : Controller
+	{
+		private readonly INewsService _newsService;
+		private readonly ISettingService _settingService;
+		private readonly ICategoryService _categoryService;
+		private readonly AppDbContext _context;
 
 
 
-//		[HttpPost]
-//		[ValidateAntiForgeryToken]
-//		public async Task<IActionResult> Create(NewsCreateVM model)
-//		{
+		public NewsController(INewsService newsService,
+									 ISettingService settingService,
+									 ICategoryService categoryService,
+									 AppDbContext context)
+		{
+			_newsService = newsService;
+			_settingService = settingService;
+			_categoryService = categoryService;
+			_context = context;
 
-//			await GetAllSelectOptions();
-//			if (!ModelState.IsValid)
-//			{
-//				return View();
-//			}
+		}
 
-//			foreach (var item in model.Image)
-//			{
-//				if (!item.CheckFileType("image/"))
-//				{
-//					ModelState.AddModelError("Image", "Please select only image file");
-//					return View();
-//				}
+		private async Task GetAllSelectOptions()
+		{
+			ViewBag.categories = await GetCategories();
+		}
+		private async Task<SelectList> GetCategories()
+		{
+			IEnumerable<Category> categories = await _categoryService.GetAll();
+			return new SelectList(categories, "Id", "Name");
+		}
 
-//				if (item.CheckFileSize(2000))
-//				{
-//					ModelState.AddModelError("Image", "Image size must be max 2000 KB");
-//					return View();
-//				}
-//			}
+		[HttpGet]
+		public async Task<IActionResult> Index(int page = 1)
+		{
+			int pageSize = 10;
 
-//			await _newsService.CreateAsync(model);
-//			return RedirectToAction("Index");
+			var news = await _newsService.GetAllWithIncludesAsync();
 
-//		}
+			int totalItems = news.Count();
+			int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-//		private bool IsImageFile(IFormFile file)
-//		{
-//			return file.ContentType.StartsWith("image/");
-//		}
+			var pagedNews = news
+				.Skip((page - 1) * pageSize)
+				.Take(pageSize)
+				.ToList();
+
+			List<NewsVM> model = new List<NewsVM>();
+			foreach (var item in pagedNews)
+			{
+				model.Add(new NewsVM
+				{
+					Id = item.Id,
+					Title = item.Title,
+					Image = item.Images?.FirstOrDefault()?.Image,
+					CategoryName = item.Category?.Name,
+					Article = item.Article,
+
+				});
+			}
+
+			var paginatedModel = new Paginate<NewsVM>(model, page, totalPages);
+
+			return View(paginatedModel);
+		}
 
 
-//	}
-//}
+        [HttpGet]
+        //[Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> Create()
+        {
+            var categories = await _categoryService.GetAll();
+
+            var tags = await _context.Tags.ToListAsync();
+            List<TagCheckBox> tagCheckBoxes = new();
+
+            foreach (var item in tags)
+            {
+                tagCheckBoxes.Add(new TagCheckBox { Id = item.Id, Value = item.Name, IsChecked = false });
+            }
+
+            ViewBag.categories = categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
+
+
+            var model = new NewsCreateVM
+            {
+                Tags = tagCheckBoxes
+            };
+
+            return View(model);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(NewsCreateVM model)
+        {
+            await GetAllSelectOptions();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            if (model.Image == null)
+            {
+                ModelState.AddModelError("Image", "Please select an image file");
+                return View();
+            }
+
+            if (!model.Image.CheckFileType("image/"))
+            {
+                ModelState.AddModelError("Image", "Please select only an image file");
+                return View();
+            }
+
+            if (model.Image.CheckFileSize(20000))
+            {
+                ModelState.AddModelError("Image", "Image size must be max 2000 KB");
+                return View();
+            }
+
+            await _newsService.CreateAsync(model);
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id is null)
+                return BadRequest();
+
+            var existNews = await _newsService.GetByIdAsync(id);
+            if (existNews is null)
+                return NotFound();
+
+            var tags = await _context.Tags.ToListAsync();
+            List<TagCheckBox> tagCheckBoxes = new();
+
+            foreach (var item in tags)
+            {
+                tagCheckBoxes.Add(new TagCheckBox { Id = item.Id, Value = item.Name, IsChecked = IsCheckedTag(id, item) });
+            }
+
+            var model = new NewsEditVM
+            {
+                Id = existNews.Id,
+                Title = existNews.Title,
+                Article = existNews.Article,
+                CategoryId = existNews.CategoryId,
+                Tags = tagCheckBoxes,
+            };
+
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, NewsEditVM model)
+        {
+            if (id == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+            {
+                var categories = await _context.Categories.ToListAsync();
+                ViewBag.categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
+
+                return View(model);
+            }
+
+            await _newsService.EditAsync(model);
+
+            return RedirectToAction(nameof(Index));
+
+
+
+        }
+
+        [HttpGet]
+		public async Task<IActionResult> Detail(int? id)
+		{
+			if (id is null)
+				return BadRequest();
+
+			var news = await _newsService.GetByIdWithAllIncludes(id.Value);
+
+			if (news is null)
+				return NotFound();
+
+			var newsDetail = _newsService.GetMappedData(news);
+
+			return View(newsDetail);
+		}
+
+
+		
+
+
+        private bool IsImageFile(IFormFile file)
+		{
+			return file.ContentType.StartsWith("image/");
+		}
+
+
+        private bool IsCheckedTag(int? id, Tag item)
+        {
+            if (item.NewsTag != null)
+            {
+                foreach (var tag in item.NewsTag)
+                {
+                    if (tag.NewsId == id)
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+
+            return false;
+
+        }
+
+
+    }
+}

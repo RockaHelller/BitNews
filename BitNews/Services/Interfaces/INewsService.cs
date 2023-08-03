@@ -1,4 +1,4 @@
-﻿using BitNews.Areas.Admin.Views.News;
+﻿using BitNews.Areas.Admin.ViewModels.News;
 using BitNews.Models;
 
 namespace BitNews.Services.Interfaces
@@ -12,5 +12,9 @@ namespace BitNews.Services.Interfaces
         Task EditAsync(int productId, NewsEditVM model);
         Task AddAsync(NewsCreateVM model);
         Task CreateAsync(NewsCreateVM model);
+        Task EditAsync(NewsEditVM model);
+
+
+
     }
 }

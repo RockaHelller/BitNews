@@ -1,0 +1,64 @@
+﻿@model NewsCreateVM
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+   
+</style>
+
+<div class="container my-5">
+    <form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
+        <input type="file" name="Image" class="form-control" required />
+        <span asp-validation-for="Image" class="text-danger d-block"></span>
+
+        <select class="form-control" asp-for="CategoryId" id="category-select" required>
+            <option value="">Select Category</option>
+            @foreach (var category in ViewBag.categories)
+            {
+                <option value="@category.Value">@category.Text</option>
+            }
+        </select>
+        <span class="text-danger d-block" asp-validation-for="CategoryId"></span>
+
+
+        <input class="form-control" placeholder="News Title" name="Title" asp-for="Title" required />
+        <span class="text-danger d-block" asp-validation-for="Title"></span>
+
+
+        <textarea class="form-control" name="Article" asp-for="Article" id="article-content" rows="3" required></textarea>
+        @*<textarea class="form-control" placeholder="Article" name="Article" asp-for="Title" rows="3" required></textarea>*@
+        <span class="text-danger d-block" asp-validation-for="Article"></span>
+
+
+        <div class="form-group mt-3">
+            <label>Tags</label>
+            @for (var i = 0; i < Model.Tags.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="checkbox" asp-for="@Model.Tags[i].IsChecked" class="form-check-input">
+                    <label class="form-check-label" asp-for="@Model.Tags[i].IsChecked">
+                        @Model.Tags[i].Value
+                    </label>
+
+                    <input type="hidden" asp-for="@Model.Tags[i].Id">
+                    <input type="hidden" asp-for="@Model.Tags[i].Value">
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-success btn-rounded btn-fw mt-3">Submit</button>
+        <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>
+    </form>
+</div>
+
+
+@section AdminScripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("article-content");
+    </script>
+}

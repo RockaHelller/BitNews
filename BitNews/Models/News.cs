@@ -11,6 +11,5 @@
         public ICollection<NewsTag> NewsTags { get; set; }
 
 
-
     }
 }

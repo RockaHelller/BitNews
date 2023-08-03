@@ -1,0 +1,55 @@
+﻿@model NewsDetailVM
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<style>
+    table, td, td {
+        border: 1px solid;
+    }
+</style>
+
+<div class="container">
+    <div class="images my-2" @*style="width: 50% !important;"*@>
+        @foreach (var item in Model.Image)
+        {
+            <img src="~/assets/img/News/@item.Image" style="max-height: 300px;" />
+        }
+    </div>
+    <div @*class="detail"*@>
+        <table>
+            <tbody style="display: flex;">
+                <tr style="display: grid;">
+                    <td>Title</td>
+                    <td>Article</td>
+                    <td>Category</td>
+                    <td>Product Tags</td>
+                    <td>Created Date</td>
+                </tr>
+                <tr style="display: grid;">
+                    <td>@Model.Title</td>
+                    <td>@Model.Article</td>
+                    <td>@Model.Category</td>
+                    <td>
+                        @foreach (var item in Model.NewsTags)
+                        {
+                            @item.Tag.Name
+                            @if (item != Model.NewsTags.Last())
+                            {
+                                @Html.Raw(", ")
+                            }
+                        }
+                    </td>
+                    <td>@Model.CreateDate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>
+
+
+
+
+
+</div>
+

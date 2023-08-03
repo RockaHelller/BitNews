@@ -33,10 +33,12 @@ builder.Services.Configure<IdentityOptions>(opt =>
 
 });
 
-
+builder.Services.AddScoped<ILayoutService, LayoutService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ISliderService, SliderService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<INewsService, NewsService>();
 
 
 
