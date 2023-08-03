@@ -114,17 +114,10 @@ namespace BitNews.Services
 
         public async Task EditAsync(NewsEditVM model)
         {
-            List<NewsImage> images = new List<NewsImage>();
-
-            if (model.Image != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
-                await model.Image.SaveFileAsync(fileName, _env.WebRootPath, "assets/img/News");
-                images.Add(new NewsImage { Image = fileName, IsMain = true });
-            }
-
+            // Retrieve the news with its related tags and images
             News news = await _context.News
                 .Include(n => n.NewsTags)
+                .Include(n => n.Images)
                 .FirstOrDefaultAsync(n => n.Id == model.Id);
 
             if (news == null)
@@ -134,12 +127,34 @@ namespace BitNews.Services
                 return;
             }
 
-            // Update the news properties
+            if (model.Image != null)
+            {
+                // Delete the existing image file if it exists
+                if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
+                {
+                    string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+
+                // Save the new image file
+                string fileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
+                await model.Image.SaveFileAsync(fileName, _env.WebRootPath, "assets/img/News");
+
+                // Update the news image
+                news.Images = new List<NewsImage>
+        {
+            new NewsImage { Image = fileName, IsMain = true }
+        };
+            }
+
+            // Update other news properties
             news.Title = model.Title;
             news.Article = model.Article;
             news.Description = model.Description;
             news.CategoryId = model.CategoryId;
-            news.Images = images;
 
             // Update the NewsTags
             news.NewsTags.Clear();

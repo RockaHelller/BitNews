@@ -18,19 +18,21 @@ namespace BitNews.Areas.Admin.Controllers
 		private readonly ISettingService _settingService;
 		private readonly ICategoryService _categoryService;
 		private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
 
 
-		public NewsController(INewsService newsService,
+        public NewsController(INewsService newsService,
 									 ISettingService settingService,
 									 ICategoryService categoryService,
-									 AppDbContext context)
+									 AppDbContext context, 
+                                     IWebHostEnvironment env)
 		{
 			_newsService = newsService;
 			_settingService = settingService;
 			_categoryService = categoryService;
 			_context = context;
-
+            _env = env;
 		}
 
 		private async Task GetAllSelectOptions()
@@ -223,8 +225,35 @@ namespace BitNews.Areas.Admin.Controllers
 			return View(newsDetail);
 		}
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            News news = await _context.News
+                .Include(n => n.Images)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-		
+            if (news == null)
+            {
+                return NotFound();
+            }
+
+            // Delete the associated image file if it exists
+            if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
+            {
+                string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+
+            _context.News.Remove(news);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
         private bool IsImageFile(IFormFile file)

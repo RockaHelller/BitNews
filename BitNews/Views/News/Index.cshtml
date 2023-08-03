@@ -81,11 +81,11 @@
 
                 <div class="col-md-8">
 
+                    <div class="row" id="isotope-grid">
                         @if (Model != null && Model.Count > 0)
                         {
                             @foreach (var item in Model)
                             {
-                    <div class="row" id="isotope-grid">
                                 <div class="col-lg-4 col-md-6">
                                     <article class="entry">
                                         <div class="entry-img-holder">
@@ -112,31 +112,30 @@
                                             </div>
                                             <div class="entry-excerpt">
                                                 <p>
-                                                    To some people, the blockchain technology is a lot more promising than the cryptocurrency it
-                                                    was
-                                                    designed to support.
+                                                    @item.Description
                                                 </p>
                                             </div>
                                         </div>
                                     </article>
                                 </div>
-
-                   
-                    </div>
-
-                            <nav class="show-more">
-                                <div class="show-more-link text-center">
-                                    <a href="#" class="btn btn-lg btn-color">
-                                        <span>more news</span>
-                                    </a>
-                                </div>
-                            </nav>
                             }
                         }
                         else
                         {
                             <p>No news available.</p>
                         }
+                
+                    </div>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        <nav class="show-more">
+                            <div class="show-more-link text-center">
+                            <a href="#" class="btn btn-lg btn-color">
+                                <span>more news</span>
+                            </a>
+                        </div>
+                    </nav>
+                    }
 
 
                 </div>

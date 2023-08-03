@@ -38,6 +38,7 @@ namespace BitNews.Controllers
                 {
                     Id = item.Id,
                     Title = item.Title,
+                    Description = item.Description,
                     Image = item.Images?.FirstOrDefault()?.Image,
                 });
             }
