@@ -64,14 +64,15 @@
 
 
 .img-col-left {
-  background-image: url('../img/960x520_bg1.jpg');
-  left: 0;
-  background-attachment: fixed !important;
-
+    background-image: url('../img/960x520_bg1.jpg');
+    left: 0;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
+
 .img-col-right {
-  background-image: url('../img/960x520_bg2.jpg');
+  background-image: url('../img/960x520_bg2.jpg') !important;
   right: 0;
   background-attachment: fixed !important;
   background-size: cover;

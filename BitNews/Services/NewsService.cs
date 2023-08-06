@@ -79,7 +79,6 @@ namespace BitNews.Services
                 };
 
 
-
                 News news = new News
                 {
                     Title = model.Title,

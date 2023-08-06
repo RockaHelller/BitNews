@@ -3,13 +3,14 @@ using BitNews.Data;
 using BitNews.Helpers;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitNews.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    //[Authorize(Roles = "SuperAdmin,Admin")]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SliderController : Controller
     {
         private readonly IWebHostEnvironment _env;
@@ -99,7 +100,8 @@ namespace BitNews.Areas.Admin.Controllers
             Slider dbSlider = await _sliderService.GetWithIncludesAsync((int)id);
             if (dbSlider is null) return NotFound();
 
-            //if (request.NewImage is null) return RedirectToAction(nameof(Index));
+
+            var oldImagePath = Path.Combine("wwwroot/assets/img/Slider", dbSlider.Image);
 
             if (request.NewImage != null)
             {

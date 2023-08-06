@@ -1,7 +1,12 @@
-﻿@model Paginate<NewsVM>
+﻿@using BitNews.Models;
+@model Paginate<NewsVM>
 @{
     ViewData["Title"] = "Index";
 }
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
 
 <style>
     th {
@@ -17,22 +22,100 @@
         width: 350px !important;
     }
 
-  
 
-    img{
+
+    img {
         border-radius: 0px !important;
         width: 100% !important;
         height: 100% !important;
     }
-
 </style>
+
+
+@if ((ViewBag.categories == null || ((List<SelectListItem>)ViewBag.categories).Count == 0) &&
+    (ViewBag.tag == null || ((List<SelectListItem>)ViewBag.tag).Count == 0))
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Categories and Tags Must be Created First',
+        })
+    </script>
+}
+else if ((ViewBag.categories == null || ((List<SelectListItem>)ViewBag.categories).Count == 0))
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Category Must be Created First',
+        })
+    </script>
+}
+else if ((ViewBag.tag == null || ((List<SelectListItem>)ViewBag.tag).Count == 0))
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Tag Must be Created First',
+        })
+    </script>
+}
 
 
 <div class="container my-3">
     <h2 class="text-center">News</h2>
-    <div class="create-btn ">
-        <a asp-controller="News" asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
-    </div>
+    @if ((ViewBag.categories == null || ((List<SelectListItem>)ViewBag.categories).Count == 0) && (ViewBag.tag == null || ((List<SelectListItem>)ViewBag.tag).Count == 0))
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Category and Tag Must be Created First',
+            })
+        </script>
+        <div class="create-btn ">
+            <a asp-controller="News" asp-action="Index" class="btn btn-success btn-rounded btn-fw">Create</a>
+        </div>
+    }
+    else if ((ViewBag.categories == null || ((List<SelectListItem>)ViewBag.categories).Count == 0))
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Category Must be Created First',
+            })
+        </script>
+        <div class="create-btn ">
+            <a asp-controller="News" asp-action="Index" class="btn btn-success btn-rounded btn-fw">Create</a>
+        </div>
+
+    }
+    else if ((ViewBag.tag == null || ((List<SelectListItem>)ViewBag.tag).Count == 0))
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Tag Must be Created First',
+            })
+        </script>
+        <div class="create-btn ">
+            <a asp-controller="News" asp-action="Index" class="btn btn-success btn-rounded btn-fw">Create</a>
+        </div>
+
+
+    }
+    else
+    {
+        <div class="create-btn ">
+            <a asp-controller="News" asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
+        </div>
+    }
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -97,6 +180,11 @@
         </div>
     </div>
 </div>
+
+
+
+
+
 
 
 

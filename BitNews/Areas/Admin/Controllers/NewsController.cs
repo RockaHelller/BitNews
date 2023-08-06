@@ -4,6 +4,7 @@ using BitNews.Data;
 using BitNews.Helpers;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,13 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	//[Authorize]
-	public class NewsController : Controller
+    [Authorize]
+    public class NewsController : Controller
 	{
 		private readonly INewsService _newsService;
 		private readonly ISettingService _settingService;
 		private readonly ICategoryService _categoryService;
+		private readonly ITagService _tagsService;
 		private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
 
@@ -26,13 +28,15 @@ namespace BitNews.Areas.Admin.Controllers
 									 ISettingService settingService,
 									 ICategoryService categoryService,
 									 AppDbContext context, 
-                                     IWebHostEnvironment env)
+                                     IWebHostEnvironment env,
+                                     ITagService tagsService)
 		{
 			_newsService = newsService;
 			_settingService = settingService;
 			_categoryService = categoryService;
 			_context = context;
             _env = env;
+            _tagsService = tagsService;
 		}
 
 		private async Task GetAllSelectOptions()
@@ -45,40 +49,64 @@ namespace BitNews.Areas.Admin.Controllers
 			return new SelectList(categories, "Id", "Name");
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Index(int page = 1)
-		{
-			int pageSize = 10;
+        [HttpGet]
+        public async Task<IActionResult> Index(int page = 1)
+        {
+            int pageSize = 10;
 
-			var news = await _newsService.GetAllWithIncludesAsync();
+            var news = await _newsService.GetAllWithIncludesAsync();
 
-			int totalItems = news.Count();
-			int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            int totalItems = news.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-			var pagedNews = news
-				.Skip((page - 1) * pageSize)
-				.Take(pageSize)
-				.ToList();
+            var pagedNews = news
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-			List<NewsVM> model = new List<NewsVM>();
-			foreach (var item in pagedNews)
-			{
-				model.Add(new NewsVM
-				{
-					Id = item.Id,
-					Image = item.Images?.FirstOrDefault()?.Image,
-					Title = item.Title,
+            List<NewsVM> model = new List<NewsVM>();
+            foreach (var item in pagedNews)
+            {
+                model.Add(new NewsVM
+                {
+                    Id = item.Id,
+                    Image = item.Images?.FirstOrDefault()?.Image,
+                    Title = item.Title,
                     Description = item.Description,
-					Article = item.Article,
-					CategoryName = item.Category?.Name,
+                    Article = item.Article,
+                    CategoryName = item.Category?.Name,
+                });
+            }
 
-				});
-			}
+            var paginatedModel = new Paginate<NewsVM>(model, page, totalPages);
 
-			var paginatedModel = new Paginate<NewsVM>(model, page, totalPages);
+            // Pass the categories data to the view directly using the model
+            var categories = await _categoryService.GetAll();
+            var tags = await _tagsService.GetAll();
 
-			return View(paginatedModel);
-		}
+            ViewBag.PaginatedModel = paginatedModel;
+
+            // Convert the list of Category objects to a list of SelectListItem
+            var categorySelectListItems = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            ViewBag.Categories = categorySelectListItems;
+
+            var tagSelectListItems = tags.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            ViewBag.Tag = tagSelectListItems;
+
+            return View(paginatedModel);
+        }
+
+
 
 
         [HttpGet]
@@ -116,7 +144,9 @@ namespace BitNews.Areas.Admin.Controllers
             await GetAllSelectOptions();
             if (!ModelState.IsValid)
             {
-                return View();
+                var categories = await _categoryService.GetAll();
+                ViewBag.categories = categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }).ToList();
+                return View(model);
             }
 
             if (model.Image == null)

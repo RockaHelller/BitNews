@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize]
     public class ArchiveController : Controller
     {
         private readonly AppDbContext _context;
@@ -77,6 +77,7 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Categories));
         }
+
 
 
         [HttpPost]

@@ -85,15 +85,19 @@ namespace BitNews.Services
                 return;
             }
 
-            // Delete the old image file if it exists
-            if (!string.IsNullOrEmpty(slider.Image))
+            if (model.NewImage != null)
             {
-                string oldImagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Slider", slider.Image);
-                if (File.Exists(oldImagePath))
+                // Delete the old image file if it exists
+                if (!string.IsNullOrEmpty(slider.Image))
                 {
-                    File.Delete(oldImagePath);
+                    string oldImagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Slider", slider.Image);
+                    if (File.Exists(oldImagePath))
+                    {
+                        File.Delete(oldImagePath);
+                    }
                 }
             }
+
 
             if (model.NewImage != null)
             {

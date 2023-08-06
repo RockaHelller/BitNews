@@ -3,13 +3,14 @@ using BitNews.Areas.Admin.ViewModels.Tag;
 using BitNews.Data;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize]
+    [Authorize]
     public class TagController : Controller
     {
         private readonly AppDbContext _context;
@@ -58,10 +59,6 @@ namespace BitNews.Areas.Admin.Controllers
             {
                 return View(request);
             }
-
-
-            string imageName = null;
-
 
             Tag newTag = new()
             {
