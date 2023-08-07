@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@*@model LayoutVM*@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,6 +21,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="~/assets/img/apple-touch-icon-114x114.png">
     <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" rel="stylesheet"
           type="text/css" />
+
 </head>
 
 <style>
@@ -436,5 +438,6 @@
 <script src="~/assets/js/owl-carousel.min.js"></script>
 <script src="~/assets/js/modernizr.min.js"></script>
 <script src="~/assets/js/scripts.js"></script>
+@RenderSection("Scripts", required: false)
 
 </html>

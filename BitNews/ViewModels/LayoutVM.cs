@@ -1,4 +1,5 @@
-﻿using BitNews.Models;
+﻿using BitNews.Areas.Admin.ViewModels.News;
+using BitNews.Models;
 
 namespace BitNews.ViewModels
 {
@@ -9,5 +10,6 @@ namespace BitNews.ViewModels
 		public Dictionary<string, string> SettingDatas { get; set; }
 		public List<Category> Categories { get; set; }
 		public List<News> News { get; set; }
+		public List<NewsVM> NewsVM { get; set; }
 	}
 }

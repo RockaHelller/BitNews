@@ -132,10 +132,10 @@ namespace BitNews.Services
                 if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
                 {
                     string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
+                    //if (System.IO.File.Exists(imagePath))
+                    //{
+                    //    System.IO.File.Delete(imagePath);
+                    //}
                 }
 
                 // Save the new image file

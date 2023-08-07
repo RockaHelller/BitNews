@@ -16,20 +16,29 @@
         <input type="file" asp-for="Image" class="form-control" multiple />
         @*<span asp-validation-for="Image" class="text-danger d-block"></span>*@
 
-        <select class="form-control" asp-for="CategoryId" id="category-select" required>
+    @*    <select class="form-control" asp-for="CategoryId" id="category-select" required>
             <option value="">Select Category</option>
             @foreach (var category in ViewBag.categories)
             {
                 <option value="@category.Value" selected="@((category.Value == Model.CategoryId.ToString()).ToString().ToLower())">@category.Text</option>
-
             }
 
         </select>
-        <span class="text-danger d-block" asp-validation-for="CategoryId"></span>
+        <span class="text-danger d-block" asp-validation-for="CategoryId"></span>*@
+
+        <select asp-for="CategoryId" class="form-control" id="category-select" required>
+            <option value="">Select Category</option>
+            @foreach (SelectListItem category in ViewBag.Categories)
+            {
+                <option value="@category.Value">@category.Text</option>
+            }
+        </select>
+        <span class="text-danger" asp-validation-for="CategoryId"></span>
 
 
         <input class="form-control" placeholder="News Title" name="Title" asp-for="Title" required />
         <span class="text-danger d-block" asp-validation-for="Title"></span>
+
 
         <textarea class="form-control" placeholder="Description" name="Description" asp-for="Description" rows="3" required></textarea>
         <span class="text-danger d-block" asp-validation-for="Description"></span>

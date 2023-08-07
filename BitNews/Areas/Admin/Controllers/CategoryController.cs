@@ -173,10 +173,10 @@ namespace BitNews.Areas.Admin.Controllers
                 }
 
                 // If a new image is provided, delete the old image from the folder
-                if (System.IO.File.Exists(oldImagePath))
-                {
-                    System.IO.File.Delete(oldImagePath);
-                }
+                //if (System.IO.File.Exists(oldImagePath))
+                //{
+                //    System.IO.File.Delete(oldImagePath);
+                //}
 
                 existCategory.Image = imageName;
             }

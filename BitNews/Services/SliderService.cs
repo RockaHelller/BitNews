@@ -57,10 +57,10 @@ namespace BitNews.Services
 
                 string path = Path.Combine(_env.WebRootPath, "assets", "img", "Slider", slider.Image);
 
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
+                //if (File.Exists(path))
+                //{
+                //    File.Delete(path);
+                //}
 
                 _context.Sliders.Remove(slider);
 

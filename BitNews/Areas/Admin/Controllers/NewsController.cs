@@ -269,14 +269,14 @@ namespace BitNews.Areas.Admin.Controllers
             }
 
             // Delete the associated image file if it exists
-            if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
-            {
-                string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
-            }
+            //if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
+            //{
+            //    string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
+            //    if (System.IO.File.Exists(imagePath))
+            //    {
+            //        System.IO.File.Delete(imagePath);
+            //    }
+            //}
 
             _context.News.Remove(news);
             await _context.SaveChangesAsync();

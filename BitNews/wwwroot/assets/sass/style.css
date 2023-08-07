@@ -2677,6 +2677,42 @@ figcaption {
   display: none !important;
 }
 
+.pagination {
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.pagination .page-item {
+  display: inline-block;
+}
+
+.pagination .page-link {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.pagination .page-link:hover {
+  background-color: #f1f1f1;
+}
+
+.pagination .active-paginate {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .disabled .page-link {
+  pointer-events: none;
+  background-color: #f1f1f1;
+  color: #ccc;
+}
+
+.pagination .disabled .page-link:hover {
+  background-color: #f1f1f1;
+}
+
 .img-col-left {
   background-image: url("../img/960x520_bg1.jpg");
   left: 0;
