@@ -35,13 +35,15 @@ namespace BitNews.Services
 			var datas = _context.Settings.AsEnumerable().ToDictionary(m => m.Key, m => m.Value);
 			var news = await _newsService.GetAllWithIncludesAsync();
 
-
 			var layoutVM = new LayoutVM
 			{
 				SettingDatas = datas,
 				UserFullName = user?.FullName,
 				UserEmail = user?.Email,
 				News = news.ToList(),
+				Image = user.Image,
+				UserPhone = user.PhoneNumber,
+				UserAddress = user.UserAddress,
 
 			};
 

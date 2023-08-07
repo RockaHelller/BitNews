@@ -32,11 +32,19 @@
                                     <a href="#">
                                         <img src="~/assets/img/blog/author.png" alt="">
                                         <span>by</span>
-                                        <span class="entry-meta-author-name">DeoThemes</span>
+                                        <span class="entry-meta-author-name">
+                                            @foreach (var item in Model.View.UserFullName)
+                                                {
+                                                    @item
+                                                }
+                                        </span>
                                     </a>
                                 </li>
                                 <li class="entry-meta-date">
-                                    21 October, 2017
+                                    @foreach (var item in Model.CreateDate)
+                                    {
+                                        @item
+                                    }
                                 </li>
                             </ul>
                         </div>
@@ -284,7 +292,7 @@
                             <a class="social social-youtube" href="#" title="youtube" target="_blank" aria-label="youtube">
                                 <i class="ui-youtube"></i>
                             </a>
-                            <a Bclass="social social-rss" href="#" title="rss" target="_blank" aria-label="rss">
+                            <a class="social social-rss" href="#" title="rss" target="_blank" aria-label="rss">
                                 <i class="ui-rss"></i>
                             </a>
                         </div>

@@ -36,29 +36,23 @@
                     <section>
                         <h3 class="section-title h2">Categories</h3>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <article class="entry">
-                                    <a href="categories.html" class="entry-meta-category">education</a>
-                                    <div class="entry-img-holder">
-                                        <a href="single-post.html">
-                                            <div class="thumb-container thumb-60">
-                                                <img src="~/assets/img/blog/post_3.jpg" class="entry-img" alt="" />
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="entry-body">
-                                        <div class="entry-header">
-                                            <h2 class="entry-title">
-                                                <a href="single-post.html">
-                                                    Crypto knowledge for financial
-                                                    growth.
-                                                </a>
-                                            </h2>
+                            @foreach (var item in Model.Categories)
+                            {
+                                <div class="col-lg-4 col-md-6">
+                                    <article class="entry">
+                                        <a href="categories.html" class="entry-meta-category">@item.Name</a>
+                                        <div class="entry-img-holder">
+                                            <a href="single-post.html">
+                                                <div class="thumb-container thumb-60">
+                                                    <img src="~/assets/img/Category/@item.Image" class="entry-img" alt="" />
+                                                </div>
+                                            </a>
                                         </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
+                                    </article>
+                                </div>
+                            }
+                            
+      @*                      <div class="col-lg-4 col-md-6">
                                 <article class="entry">
                                     <a href="categories.html" class="entry-meta-category">investment</a>
                                     <div class="entry-img-holder">
@@ -167,7 +161,7 @@
                                         </div>
                                     </div>
                                 </article>
-                            </div>
+                            </div>*@
                         </div>
                     </section> <!-- end categories -->
                 </div> <!-- end posts -->
@@ -232,45 +226,22 @@
                         <h4 class="widget-title">Popular Posts</h4>
 
                         <ul class="widget-popular-posts-list">
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">
-                                                Bitcoin Fees: Possible Solutions and
-                                                Scenarios
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">
-                                                Bitcoin Fees: Possible Solutions and
-                                                Scenarios
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">
-                                                Bitcoin Fees: Possible Solutions and
-                                                Scenarios
-                                            </a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
+                            @foreach (var item in Model.News.Take(2))
+                            {
+                                <li class="widget-popular-posts-item">
+                                    <article>
+                                        <div class="widget-popular-posts-entry">
+                                            <a asp-controller="News" asp-action="Index"  class="entry-meta-category">@item.Category.Name</a>
+                                            <h3 class="widget-popular-posts-entry-title">
+                                                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">
+                                                    @item.Title
+                                                </a>
+                                            </h3>
+                                        </div>
+                                    </article>
+                                </li>
+
+                            }
                         </ul>
                     </div> <!-- end widget popular posts -->
 
@@ -388,25 +359,29 @@
         <div class="container">
             <h3 class="section-title h2">Recent News</h3>
             <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <article class="entry">
-                        <div class="entry-img-holder">
-                            <a href="single-post.html">
-                                <div class="thumb-container thumb-60">
-                                    <img src="~/assets/img/blog/post_7.jpg" class="entry-img" alt="" />
-                                </div>
-                            </a>
-                        </div>
-                        <div class="entry-body">
-                            <div class="entry-header">
-                                <h2 class="entry-title">
-                                    <a href="single-post.html">Best Bitcoin Exchanges Reviewed &amp; Compared</a>
-                                </h2>
+                @foreach (var item in Model.News.OrderByDescending(m=>m.Id).Take(4))
+                {
+                    <div class="col-lg-3 col-md-6">
+                        <article class="entry">
+                            <div class="entry-img-holder">
+                                <a asp-controller="News" asp-action="Index" asp-route-id="@item.Id">
+                                    <div class="thumb-container thumb-60">
+                                        <img src="~/assets/img/News/@item.Images.FirstOrDefault().Image" class="entry-img" alt="" />
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-lg-3 col-md-6">
+                            <div class="entry-body">
+                                <div class="entry-header">
+                                    <h2 class="entry-title">
+                                        <a asp-controller="News" asp-action="Index" asp-route-id="@item.Id">@item.Title</a>
+                                    </h2>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                }
+@*                <div class="col-lg-3 col-md-6">
                     <article class="entry">
                         <div class="entry-img-holder">
                             <a href="single-post.html">
@@ -463,7 +438,7 @@
                             </div>
                         </div>
                     </article>
-                </div>
+                </div>*@
             </div>
         </div>
     </section> <!-- end Recent News -->

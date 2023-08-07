@@ -20,14 +20,13 @@
                     <ul class="entry-meta">
                         <li class="entry-meta-author">
                             <a href="#">
-                                <span></span>
                                 @if (item.View != null && item.View.UserFullName != null)
                                 {
                                     <span class="entry-meta-author-name">@item.View.UserFullName</span>
                                 }
                             </a>
                         </li>
-                        <li class="entry-meta-date">21 October, 2018</li>
+                        <li class="entry-meta-date">@item.CreateDate</li>
                     </ul>
                 </div>
                 <div class="entry-excerpt">
@@ -39,39 +38,3 @@
         </article>
     </div>
 }
-@*@foreach (var item in Model.Datas)
-{
-    <div class="col-lg-4 col-md-6 filter-category-news">
-        <article class="entry" data-tag="@item.NewsVM.FirstOrDefault().CategoryName">
-            <div class="entry-img-holder">
-                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.NewsVM.FirstOrDefault().Id">
-                    <div class="thumb-container thumb-65">
-                        <img src="~/assets/img/News/@item.NewsVM.FirstOrDefault().Image" class="entry-img" alt="" />
-                    </div>
-                </a>
-            </div>
-            <div class="entry-body">
-                <div class="entry-header">
-                    <h2 class="entry-title entry-title--medium">
-                        <a asp-controller="News" asp-action="Detail" asp-route-id="@item.NewsVM.FirstOrDefault().Id">@item.NewsVM.FirstOrDefault().Title</a>
-                    </h2>
-                    <ul class="entry-meta">
-                        <li class="entry-meta-author">
-                            <a href="#">
-                                <span></span>
-                                <span class="entry-meta-author-name">@item.UserFullName</span>
-                            </a>
-                        </li>
-                        <li class="entry-meta-date">21 October, 2018</li>
-                    </ul>
-                </div>
-                <div class="entry-excerpt">
-                    <p>
-                        @item.NewsVM.FirstOrDefault().Description
-                    </p>
-                </div>
-            </div>
-        </article>
-    </div>
-}
-*@

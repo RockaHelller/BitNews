@@ -1,5 +1,4 @@
-﻿
-
+﻿using BitNews.Areas.Admin.ViewModels.News;
 using BitNews.Data;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
@@ -12,19 +11,30 @@ namespace BitNews.Controllers
     {
 		private readonly AppDbContext _context;
 		private readonly ISliderService _sliderService;
+        private readonly INewsService _newsService;
+        private readonly ICategoryService _categoryService;
 
-		public HomeController(AppDbContext context, ISliderService sliderService)
+        public HomeController(AppDbContext context, ISliderService sliderService, 
+			INewsService newsService, ICategoryService categoryService)
 		{
 			_context = context;
 			_sliderService = sliderService;
+			_newsService = newsService;
+			_categoryService = categoryService;
 		}
 
 		public async Task<IActionResult> Index()
 		{
 			IEnumerable<Slider> sliders = await _sliderService.GetAllByStatusAsync();
-			HomeVM model = new HomeVM
+            IEnumerable<News> news = await _newsService.GetAllWithIncludesAsync();
+            IEnumerable<Category> categories = await _categoryService.GetAll();
+
+
+            HomeVM model = new HomeVM
 			{
-				Sliders = sliders.ToList()
+				Sliders = sliders.ToList(),
+				News = news.ToList(),
+				Categories = categories.ToList(),
 			};
 
 			return View(model); // Pass the single HomeVM object to the view

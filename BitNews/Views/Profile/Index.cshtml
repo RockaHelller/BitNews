@@ -1,0 +1,279 @@
+﻿@model LayoutVM
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "";
+}
+
+<style>
+    body {
+        margin-top: 20px;
+        color: #1a202c;
+        text-align: left;
+        background-color: #e2e8f0;
+    }
+
+    .main-body {
+        padding: 15px;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    .gutters-sm {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+        .gutters-sm > .col, .gutters-sm > [class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+
+    .mb-3, .my-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .bg-gray-300 {
+        background-color: #e2e8f0;
+    }
+
+    .h-100 {
+        height: 100% !important;
+    }
+
+    input{
+        margin-bottom: 6px!important;
+    }
+
+    button{
+        outline: none !important;
+    }
+
+
+
+    .shadow-none {
+        box-shadow: none !important;
+    }
+</style>
+
+<div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editInfoModalLabel">Edit Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editInfoForm">
+                    <div class="form-group">
+                        <label for="userFullName">Full Name</label>
+                        <input type="text" id="userFullName" class="form-control" value="@Model.UserFullName" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userName">User Name</label>
+                        <input type="text" id="userName" class="form-control" value="@User.Identity.Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="text" id="userEmail" class="form-control" value="@Model.UserEmail" />
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">Phone Number</label>
+                        <input type="text" id="userPhone" class="form-control" value="@Model.UserPhone" />
+                    </div>
+                    <div class="form-group">
+                        <label for="userAddress">Address</label>
+                        <input type="text" id="userAddress" class="form-control" value="@Model.UserAddress" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveInfoBtn">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <a asp-controller="Profile" asp-action="EditImage">
+                                Edit Profile Image
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            </a>
+                            <div class="mt-3">
+                                <h4>
+                                    @Model.UserFullName
+                                </h4>
+                                <p class="text-secondary mb-1">Full Stack Developer</p>
+                                <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.UserFullName
+                                <i class="fal fa-edit edit-icon" data-toggle="modal" data-target="#editInfoModal"></i>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">User Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @User.Identity.Name
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @Model.UserEmail
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Phone</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @if (Model.UserAddress == null || !Model.UserAddress.Any())
+                                {
+                                    @*<i class="fal fa-phone-plus"></i>*@
+
+                                }
+                                else
+                                {
+                                    @Model.UserPhone
+                                    <i class="fal fa-edit"></i>
+                                    <i class="fal fa-edit edit-icon" data-toggle="modal" data-target="#editInfoModal"></i>
+
+                                }
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Address</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @if (Model.UserAddress == null || !Model.UserAddress.Any())
+                                {
+                                    @*<i class="fal fa-map-marked-alt"></i>*@
+
+                                }
+                                else
+                                {
+                                    @Model.UserAddress
+                                    <i class="fal fa-edit"></i>
+                                    <i class="fal fa-edit edit-icon" data-toggle="modal" data-target="#editInfoModal"></i>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Add your icon to trigger the edit modal -->
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    // Handler for the icon click to open the corresponding modal and populate the input fields with existing data
+                    $(".edit-icon").click(function () {
+                        // Get the data property value, which corresponds to the property to be edited
+                        var property = $(this).data("property");
+
+                        // Populate the input field with the existing data based on the property
+                        var value = property === "UserFullName" ? "@Model.UserFullName"
+                            : property === "UserName" ? "@User.Identity.Name"
+                                : property === "UserEmail" ? "@Model.UserEmail"
+                                    : "";
+
+                        // Set the value in the input field
+                        $("#" + property).val(value);
+
+                        // Show the corresponding modal based on the property
+                        $("#" + property + "Modal").modal("show");
+                    });
+
+                    // Handler for the form submission when the user clicks "OK"
+                    $(".save-btn").on("click", function () {
+                        // Get the data property value, which corresponds to the property to be edited
+                        var property = $(this).data("property");
+
+                        // Get the updated value from the input field
+                        var updatedValue = $("#" + property).val();
+
+                        // Send the updated info to the server using AJAX
+                        $.ajax({
+                            url: "@Url.Action("EditInfo", "YourController")",
+                            type: "POST",
+                            data: {
+                                property: property,
+                                value: updatedValue
+                            },
+                            success: function (result) {
+                                if (result.success) {
+                                    // Update the UI with the new info if needed
+                                    // Close the modal
+                                    $("#" + property + "Modal").modal("hide");
+                                } else {
+                                    // Handle errors if necessary
+                                    alert("Failed to update info. Please try again.");
+                                }
+                            },
+                            error: function () {
+                                // Handle errors if necessary
+                                alert("An error occurred while updating info.");
+                            }
+                        });
+                    });
+                });
+            </script>
+        }

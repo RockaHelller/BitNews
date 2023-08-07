@@ -121,7 +121,7 @@ namespace BitNews.Areas.Admin.Controllers
             var existCategory = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
             if (existCategory is null) return NotFound();
 
-            CategoryEditVM model = new()
+            EditImageVM model = new()
             {
                 Id = existCategory.Id,
                 Name = existCategory.Name,
@@ -133,7 +133,7 @@ namespace BitNews.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, CategoryEditVM request)
+        public async Task<IActionResult> Edit(int? id, EditImageVM request)
         {
             if (id is null)
                 return BadRequest();

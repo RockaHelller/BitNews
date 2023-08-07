@@ -7,6 +7,7 @@ using BitNews.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BitNews.Services;
+using System.Data;
 
 namespace BitNews.Controllers
 {
@@ -20,13 +21,13 @@ namespace BitNews.Controllers
 
 
 
-        public NewsController(INewsService productService,
+        public NewsController(INewsService newsService,
                                      ISettingService settingService,
                                      ICategoryService categoryService,
                                      AppDbContext context,
                                      ILayoutService layoutService)
         {
-            _newsService = productService;
+            _newsService = newsService;
             _settingService = settingService;
             _categoryService = categoryService;
             _context = context;
@@ -35,7 +36,7 @@ namespace BitNews.Controllers
 
         public async Task<IActionResult> Index(string[] selectedTags, int page = 1, int pageSize = 10)
         {
-           
+
             ViewBag.PageSize = pageSize;
 
             var news = await _newsService.GetAllWithIncludesAsync();
@@ -64,9 +65,12 @@ namespace BitNews.Controllers
                     Image = item.Images?.FirstOrDefault()?.Image,
                     CategoryName = item.Category.Name,
                     ViewCount = item.ViewCount,
-                    View = datas
+                    View = datas,
+                    CreateDate = item.CreateDate.ToString("dd MMMM yyyy")
                 });
             }
+            ViewBag.SelectedTags = selectedTags;
+
 
             if (selectedTags != null && selectedTags.Length > 0)
             {
@@ -93,6 +97,8 @@ namespace BitNews.Controllers
 
             if (news is null) return NotFound();
 
+            var datas = await _layoutService.GetAllDatas();
+
             ViewModels.NewsDetailVM model = new()
             {
                 Id = news.Id,
@@ -101,7 +107,9 @@ namespace BitNews.Controllers
                 Article = news.Article,
                 CategoryName = news.Category.Name,
                 Image = news.Images,
-                NewsTags = news.NewsTags // Set the NewsTags collection in the NewsDetailVM model
+                NewsTags = news.NewsTags, // Set the NewsTags collection in the NewsDetailVM model
+                CreateDate = news.CreateDate.ToString("dd MMMM yyyy"),
+                View = datas,
             };
 
             return View(model);

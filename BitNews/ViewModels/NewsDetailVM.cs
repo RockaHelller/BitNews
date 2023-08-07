@@ -11,5 +11,8 @@ namespace BitNews.ViewModels
         public string CategoryName { get; set; }
         public ICollection<NewsImage> Image { get; set; }
         public ICollection<NewsTag> NewsTags { get; set; }
+        public LayoutVM View { get; set; }
+        public string CreateDate { get; set; }
+
     }
 }

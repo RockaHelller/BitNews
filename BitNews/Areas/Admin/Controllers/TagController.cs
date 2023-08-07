@@ -104,7 +104,6 @@ namespace BitNews.Areas.Admin.Controllers
                 existTag.Name = request.Name;
             }
 
-
             _context.Update(existTag);
             await _context.SaveChangesAsync();
 

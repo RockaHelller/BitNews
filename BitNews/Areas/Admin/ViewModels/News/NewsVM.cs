@@ -13,5 +13,6 @@ namespace BitNews.Areas.Admin.ViewModels.News
         public int ViewCount { get; set; }
         public string Tag { get; set; }
         public LayoutVM View { get; set; }
+        public string CreateDate { get; set; }
     }
 }
