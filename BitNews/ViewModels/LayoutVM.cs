@@ -16,7 +16,5 @@ namespace BitNews.ViewModels
 		public List<News> News { get; set; }
 		public ImageEditVM ImageEditVM { get; set; }
 		public List<NewsVM> NewsVM { get; set; }
-		
-		
 	}
 }

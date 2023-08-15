@@ -1,0 +1,63 @@
+﻿@using BitNews.Areas.Admin.ViewModels.Setting;
+@model List<SettingVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+
+    td {
+        width: 80px !important;
+    }
+
+</style>
+
+<div class="container my-3">
+    <h2 class="text-center">Settings</h2>
+    @*    @if (User.Identity.IsAuthenticated)
+    {
+    if (User.IsInRole("SuperAdmin"))
+    {*@
+    <div class="create-btn ">
+        <a asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
+    </div>
+    @*     }
+    }*@
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Key
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Options
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="py-1">
+                            @item.Key
+                        </td>
+                        <td class="py-1">
+                            @item.Value
+                        </td>
+                        <td>
+                            <a style="width: 90px !important;" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-rounded btn-fw">Edit</a>
+                            <form style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                <button style="width: 90px !important;" type="submit" class="btn btn-danger btn-rounded btn-fw">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

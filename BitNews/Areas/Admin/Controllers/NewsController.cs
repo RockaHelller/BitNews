@@ -4,6 +4,7 @@ using BitNews.Data;
 using BitNews.Helpers;
 using BitNews.Models;
 using BitNews.Services.Interfaces;
+using BitNews.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -75,6 +76,7 @@ namespace BitNews.Areas.Admin.Controllers
                     Description = item.Description,
                     Article = item.Article,
                     CategoryName = item.Category?.Name,
+                    CreatorName = item.CreatorName
                 });
             }
 
@@ -110,10 +112,9 @@ namespace BitNews.Areas.Admin.Controllers
 
 
         [HttpGet]
-        //[Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Create()
         {
-
             var categories = await _categoryService.GetAll();
 
             var tags = await _context.Tags.ToListAsync();
@@ -129,7 +130,9 @@ namespace BitNews.Areas.Admin.Controllers
 
             var model = new NewsCreateVM
             {
-                Tags = tagCheckBoxes
+                Tags = tagCheckBoxes,
+                CreatorName = User.Identity.Name,
+
             };
 
             return View(model);
@@ -142,6 +145,9 @@ namespace BitNews.Areas.Admin.Controllers
         public async Task<IActionResult> Create(NewsCreateVM model)
         {
             await GetAllSelectOptions();
+            string creatorName = $"{User.Identity.Name}"; // Modify this based on your authentication setup
+            model.CreatorName = creatorName;
+
             if (!ModelState.IsValid)
             {
                 var categories = await _categoryService.GetAll();
@@ -173,8 +179,6 @@ namespace BitNews.Areas.Admin.Controllers
 
 
 
-
-
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -201,6 +205,7 @@ namespace BitNews.Areas.Admin.Controllers
                 Description = existNews.Description,
                 CategoryId = existNews.CategoryId,
                 Tags = tagCheckBoxes,
+                
             };
 
             var categories = await _context.Categories.ToListAsync();

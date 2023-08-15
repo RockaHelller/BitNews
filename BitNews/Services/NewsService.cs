@@ -58,7 +58,9 @@ namespace BitNews.Services
                 Description = news.Description,
                 Category = news.Category?.Name,
                 NewsTags = news.NewsTags,
-                CreateDate = news.CreateDate.ToString("dddd, dd MMMM yyyy")
+                CreateDate = news.CreateDate.ToString("dddd, dd MMMM yyyy"),
+                CreatorName = news.CreatorName,
+                
             };
             return newsDetail;
         }
@@ -85,7 +87,8 @@ namespace BitNews.Services
                     Article = model.Article,
                     Description = model.Description,
                     CategoryId = model.CategoryId,
-                    Images = images
+                    Images = images,
+                    CreatorName = model.CreatorName,
                 };
 
                 await _context.News.AddAsync(news);
@@ -98,7 +101,7 @@ namespace BitNews.Services
                         NewsTag newsTag = new NewsTag
                         {
                             NewsId = news.Id,
-                            TagId = item.Id
+                            TagId = item.Id,
                         };
 
                         await _context.NewsTags.AddAsync(newsTag);
@@ -164,7 +167,8 @@ namespace BitNews.Services
                     news.NewsTags.Add(new NewsTag
                     {
                         NewsId = news.Id,
-                        TagId = item.Id
+                        TagId = item.Id,
+                       
                     });
                 }
             }

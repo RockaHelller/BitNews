@@ -1,0 +1,49 @@
+﻿@using BitNews.Models;
+@model List<Contact>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+
+    td {
+        width: 80px !important;
+    }
+
+</style>
+
+<div class="container my-3">
+    <h2 class="text-center">Contact</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        User
+                    </th>
+                    <th>
+                        Options
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderByDescending(m=>m.Id))
+                {
+                    <tr>
+                        <td class="py-1">
+                            @item.CreatorName
+                        </td>
+                        <td>
+                            <a style="width: 90px !important;" asp-area="Admin" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary btn-rounded btn-fw">Show</a>
+                            <form style="display: inline-block;" method="post" asp-action="Delete" asp-route-id="@item.Id">
+                                <button style="width: 90px !important;" type="submit" class="btn btn-danger btn-rounded btn-fw">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

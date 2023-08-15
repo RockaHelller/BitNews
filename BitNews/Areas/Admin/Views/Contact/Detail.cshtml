@@ -1,0 +1,29 @@
+﻿@using BitNews.Areas.Admin.ViewModels.Contact;
+@model ContactDetailVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="container my-3">
+    <div class="card">
+        <div class="card-header">
+            Username: @Model.CreatorName
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <strong>Name:</strong> @Model.Name
+            </p>
+            <p class="card-text">
+                <strong>Email:</strong> @Model.Email
+            </p>
+            <p class="card-text">
+                <strong>Subject:</strong> @Model.Subject
+            </p>
+            <p class="card-text">
+                <strong>Message:</strong> @Model.Message
+            </p>
+        </div>
+    </div>
+</div>
+

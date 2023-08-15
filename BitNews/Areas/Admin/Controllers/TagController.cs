@@ -45,7 +45,7 @@ namespace BitNews.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Create()
         {
             return View();
@@ -74,7 +74,6 @@ namespace BitNews.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id is null) return BadRequest();
             var existTag = await _context.Tags.FirstOrDefaultAsync(m => m.Id == id);
             if (existTag is null) return NotFound();

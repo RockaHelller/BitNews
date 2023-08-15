@@ -54,7 +54,6 @@ namespace BitNews.Controllers
             List<NewsVM> model = new List<NewsVM>();
             var datas = await _layoutService.GetAllDatas();
 
-
             foreach (var item in pagedNews)
             {
                 model.Add(new NewsVM
@@ -66,11 +65,12 @@ namespace BitNews.Controllers
                     CategoryName = item.Category.Name,
                     ViewCount = item.ViewCount,
                     View = datas,
-                    CreateDate = item.CreateDate.ToString("dd MMMM yyyy")
+                    CreateDate = item.CreateDate.ToString("dd MMMM yyyy"),
+                    Tag = string.Join(", ", item.NewsTags.Select(tag => tag.Tag.Name)),
+                    CreatorName = item.CreatorName,
+
                 });
             }
-            ViewBag.SelectedTags = selectedTags;
-
 
             if (selectedTags != null && selectedTags.Length > 0)
             {
@@ -110,6 +110,8 @@ namespace BitNews.Controllers
                 NewsTags = news.NewsTags, // Set the NewsTags collection in the NewsDetailVM model
                 CreateDate = news.CreateDate.ToString("dd MMMM yyyy"),
                 View = datas,
+                News = datas.News,
+                CreatorName = news.CreatorName
             };
 
             return View(model);

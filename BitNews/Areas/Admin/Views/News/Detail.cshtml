@@ -6,6 +6,7 @@
 <style>
     table, td, td {
         border: 1px solid;
+        text-align: center;
     }
 </style>
 
@@ -18,18 +19,21 @@
     </div>
     <div @*class="detail"*@>
         <table>
-            <tbody style="display: flex;">
-                <tr style="display: grid;">
-                    <td>Title</td>
-                    <td>Article</td>
-                    <td>Category</td>
-                    <td>Product Tags</td>
-                    <td>Created Date</td>
-                </tr>
-                <tr style="display: grid;">
+            <tbody>
+                <tr>
+                    <td style="background-color: #f0f0f0;">Title</td>
                     <td>@Model.Title</td>
-                    <td>@Model.Article</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #f5f5f5;">Article</td>
+                    <td>@Html.Raw(@Model.Article)</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #f0f0f0;">Category</td>
                     <td>@Model.Category</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #f5f5f5;">Product Tags</td>
                     <td>
                         @foreach (var item in Model.NewsTags)
                         {
@@ -40,9 +44,18 @@
                             }
                         }
                     </td>
+                </tr>
+                <tr>
+                    <td style="background-color: #f0f0f0;">Created Date</td>
                     <td>@Model.CreateDate</td>
                 </tr>
+                <tr>
+                    <td style="background-color: #f5f5f5;">Creator</td>
+                    <td>@Model.CreatorName</td>
+                </tr>
             </tbody>
+
+
         </table>
     </div>
     <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>

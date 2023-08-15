@@ -1,0 +1,38 @@
+﻿@using BitNews.Areas.Admin.ViewModels.About;
+@model AboutEditVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container my-3">
+    <form method="post" asp-controller="About" asp-action="Edit" enctype="multipart/form-data">
+        <div class="form-group">
+            <img src="~/assets/img/About/@Model.Image" alt="Image" class="image-preview" />
+            <input asp-for="NewImage" type="file" id="NewImage" name="NewImage" class="form-control" />
+            <span asp-validation-for="NewImage" class="text-danger d-block"></span>
+        </div>
+
+        <div class="form-group">
+            <input placeholder="Title" asp-for="Title" type="text" id="Title" name="Title" class="form-control" value="@Model.Title" />
+            <span asp-validation-for="Title" class="text-danger d-block"></span>
+        </div>
+
+        <div class="form-group">
+            <input placeholder="Description" asp-for="Description" id="Description" name="Description" class="form-control" type="text" value="@Model.Description" />
+            <span asp-validation-for="Description" class="text-danger d-block"></span>
+        </div>
+
+        <div class="form-group">
+            <input placeholder="Mission" asp-for="Mission" id="Mission" name="Mission" class="form-control" type="text" value="@Model.Mission" />
+            <span asp-validation-for="Mission" class="text-danger d-block"></span>
+        </div>
+
+        <div class="form-group">
+            <input placeholder="What We Do" asp-for="WhatWeDo" id="WhatWeDo" name="WhatWeDo" class="form-control" type="text" value="@Model.WhatWeDo" />
+            <span asp-validation-for="WhatWeDo" class="text-danger d-block"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-rounded btn-fw mt-3">Submit</button>
+
+    </form>
+</div>

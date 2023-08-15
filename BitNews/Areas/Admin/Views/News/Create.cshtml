@@ -20,6 +20,8 @@
         </select>
         <span class="text-danger d-block" asp-validation-for="CategoryId"></span>
 
+        <input hidden asp-for="CreatorName" name="CreatorName" value="@User.Identity.Name" />
+
 
         <input class="form-control" placeholder="News Title" name="Title" asp-for="Title" required />
         <span class="text-danger d-block" asp-validation-for="Title"></span>

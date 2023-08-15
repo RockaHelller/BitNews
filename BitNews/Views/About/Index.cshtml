@@ -1,4 +1,5 @@
-﻿
+﻿@model AboutVM
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,21 +9,21 @@
     <!-- Content -->
     <section class="section-wrap main-content">
         <div class="container">
-            <h1 class="page-title h2">About BitNews</h1>
-            <p class="page-subtitle">We are optimists who love to work together and Creating an awesome clothes store with this Theme is easy than you can imagine. Just a handful of products, including the goal-setting SELF Journal.</p>
+            <h1 class="page-title h2">@Model.Title</h1>
+            <p class="page-subtitle">@Model.Description</p>
 
-            <img src="~/assets/img/blog/about.jpg" alt="">
+            <img src="~/assets/img/About/@Model.Image" alt="">
 
             <div class="row mt-40">
 
                 <div class="col-md-6 mb-30">
                     <h3 class="h4 mb-20">Our mission</h3>
-                    <p>We provide information to help you take full advantage of this cutting-edge industry. A team of cryptocurrency enthusiasts, blockchain technology supporters and investors, we aim to provide a steady stream of reliable information that will help you navigate the exciting world of cryptocurrency. If you’re simply curious about the tech or need an in-depth analysis of the current market trends, our contributors are happy to help. Because of their hustle, for two years in a row, Best Self Co has received Shopify’s. To give side hustlers a helping hand, Brouwer will share more of the hard work and planning that went into this ecommerce success.</p>
+                    <p>@Model.Mission</p>
                 </div>
 
                 <div class="col-md-6">
                     <h3 class="h4 mb-20">What we do</h3>
-                    <p>We provide information to help you take full advantage of this cutting-edge industry. A team of cryptocurrency enthusiasts, blockchain technology supporters and investors, we aim to provide a steady stream of reliable information that will help you navigate the exciting world of cryptocurrency. If you’re simply curious about the tech or need an in-depth analysis of the current market trends, our contributors are happy to help. Because of their hustle, for two years in a row, Best Self Co has received Shopify’s. To give side hustlers a helping hand, Brouwer will share more of the hard work and planning that went into this ecommerce success.</p>
+                    <p>@Model.WhatWeDo</p>
                 </div>
 
             </div> <!-- end row -->

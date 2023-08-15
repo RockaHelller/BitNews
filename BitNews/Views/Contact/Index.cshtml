@@ -1,4 +1,5 @@
-﻿
+﻿@model Contact
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -18,32 +19,35 @@
                         Don't hesitate to get in touch. We will reply you as soon as possible.
                     </p>
 
+
                     <!-- Contact Form -->
-                    <form id="contact-form" class="contact-form mt-30 mb-30" method="post" action="#">
+                    <form asp-action="CreateContact" method="post" id="contact-form" class="contact-form mt-30 mb-30">
                         <div class="row">
+                            <input hidden asp-for="CreatorName" name="CreatorName" value="@User.Identity.Name" />
+
                             <div class="col-lg-4">
                                 <div class="contact-name">
                                     <label for="name">Name <abbr title="required" class="required">*</abbr></label>
-                                    <input name="name" id="name" type="text">
+                                    <input asp-for="Name" name="name" id="name" type="text">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="contact-email">
                                     <label for="email">Email <abbr title="required" class="required">*</abbr></label>
-                                    <input name="email" id="email" type="email">
+                                    <input asp-for="Email" name="email" id="email" type="email">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="contact-subject">
                                     <label for="email">Subject</label>
-                                    <input name="subject" id="subject" type="text">
+                                    <input asp-for="Subject" name="subject" id="subject" type="text">
                                 </div>
                             </div>
                         </div>
 
                         <div class="contact-message">
                             <label for="message">Message <abbr title="required" class="required">*</abbr></label>
-                            <textarea id="message" name="message" rows="7" required="required"></textarea>
+                            <textarea asp-for="Message" id="message" name="message" rows="7" required="required"></textarea>
                         </div>
 
                         <input type="submit" class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message">
@@ -107,4 +111,6 @@
             width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
 </main>
+
+
 

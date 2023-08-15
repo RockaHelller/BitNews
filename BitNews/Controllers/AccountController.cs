@@ -106,7 +106,7 @@ namespace BitNews.Controllers
                 return View(request);
             }
 
-            await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+            await _userManager.AddToRoleAsync(user, Roles.SuperAdmin.ToString());
 
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 

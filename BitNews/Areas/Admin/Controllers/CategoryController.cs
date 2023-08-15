@@ -187,44 +187,41 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var existCategory = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-
-
-        //    if (!string.IsNullOrEmpty(existCategory.Image))
-        //    {
-        //        string imagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Category", existCategory.Image);
-
-        //        if (System.IO.File.Exists(imagePath))
-        //        {
-        //            System.IO.File.Delete(imagePath);
-        //        }
-        //    }
-
-        //    _context.Remove(existCategory);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToAction(nameof(Index));
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("Delete")]
-        public async Task<IActionResult> SoftDelete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var existCategory = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
 
-            existCategory.SoftDelete = true;
 
+            if (!string.IsNullOrEmpty(existCategory.Image))
+            {
+                string imagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Category", existCategory.Image);
+
+                //if (System.IO.File.Exists(imagePath))
+                //{
+                //    System.IO.File.Delete(imagePath);
+                //}
+            }
+
+            _context.Remove(existCategory);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[ActionName("Delete")]
+        //public async Task<IActionResult> SoftDelete(int id)
+        //{
+        //    var existCategory = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+
+        //    existCategory.SoftDelete = true;
+
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

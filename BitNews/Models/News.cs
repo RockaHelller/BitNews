@@ -10,6 +10,7 @@
         public int ViewCount { get; set; }
         public ICollection<NewsImage> Images { get; set; }
         public ICollection<NewsTag> NewsTags { get; set; }
+        public string CreatorName { get; set; }
 
 
     }

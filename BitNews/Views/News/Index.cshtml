@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Index";
     var distinctCategories = Model.Datas.Select(item => item.CategoryName).Distinct();
+    //var distinctTags = Model.Datas.Select(item => item.Tag).Distinct();
 
 }
 
@@ -30,10 +31,10 @@
                                 <select id="pageSizeSelect" name="pageSize" class="w-75 mb-1" onchange="submitForm()">
 
                                     <option>Show Item</option>
-                                    <option value="5" select=@(ViewBag.PageSize == 5 ? "selected" : "")>Show 5</option>
-                                    <option value="10" select=@(ViewBag.PageSize == 10 ? "selected" : "")>Show 10</option>
-                                    <option value="20" select=@(ViewBag.PageSize == 20 ? "selected" : "")>Show 20</option>
-                                    <option value="40" select=@(ViewBag.PageSize == 40 ? "selected" : "")>Show 40</option>
+                                    <option value="6" select=@(ViewBag.PageSize == 6 ? "selected" : "")>Show 6</option>
+                                    <option value="12" select=@(ViewBag.PageSize == 12 ? "selected" : "")>Show 12</option>
+                                    <option value="24" select=@(ViewBag.PageSize == 24 ? "selected" : "")>Show 24</option>
+                                    <option value="48" select=@(ViewBag.PageSize == 48 ? "selected" : "")>Show 48</option>
                                 </select>
                             </form>
 
@@ -56,17 +57,31 @@
                                             </li>
                                         }
                                     </ul>
-                                </form>
-                            </div>
 
+
+                     @*               <h6 class="shop-widget-title my-2">Filter by Tag</h6>
+                                    <ul class="shop-widget-list">
+                                        @foreach (var tagName in distinctTags)
+                                        {
+                                            <li class="my-2">
+                                                <div class="shop-widget-content">
+                                                    <input type="checkbox" id="@($"tag{tagName}")">
+                                                    <label for="@($"tag{tagName}")">@tagName</label>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>*@
+                                    </form>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-8">
+                    <div class="col-md-8">
 
-                    <div class="row">
-                        @if (Model != null && Model.Datas.Count > 0)
+                        <div class="row">
+                            @if (Model != null && Model.Datas.Count > 0)
                         {
                             <partial name="_ProductsPartial" />
                         }
@@ -163,6 +178,10 @@
         function submitForm() {
             document.getElementById('pageSizeForm').submit();
         }
+
+
+
+
 
 
     </script>

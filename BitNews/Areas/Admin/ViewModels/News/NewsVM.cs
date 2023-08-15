@@ -14,5 +14,7 @@ namespace BitNews.Areas.Admin.ViewModels.News
         public string Tag { get; set; }
         public LayoutVM View { get; set; }
         public string CreateDate { get; set; }
+        public string CreatorName { get; set; } // Add this property
+
     }
 }

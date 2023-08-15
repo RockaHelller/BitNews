@@ -20,9 +20,15 @@
                     <ul class="entry-meta">
                         <li class="entry-meta-author">
                             <a href="#">
-                                @if (item.View != null && item.View.UserFullName != null)
+                                @if (item.View != null && item.View.UserFullName != null && item.View.UserFullName != "Guest User")
                                 {
-                                    <span class="entry-meta-author-name">@item.View.UserFullName</span>
+                                    @*<span class="entry-meta-author-name">@item.View.UserFullName</span>*@
+                                    @item.CreatorName
+                                }
+                                else
+                                {
+                                    @*<span class="entry-meta-author-name">Guest User</span>*@
+                                    @item.CreatorName
                                 }
                             </a>
                         </li>

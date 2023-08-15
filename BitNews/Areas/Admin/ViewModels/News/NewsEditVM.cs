@@ -10,5 +10,6 @@
         public int CategoryId { get; set; }
         public IFormFile? Image { get; set; }
         public List<TagCheckBox> Tags { get; set; }
+
     }
 }

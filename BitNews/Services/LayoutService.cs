@@ -28,27 +28,28 @@ namespace BitNews.Services
 
 		}
 
-		public async Task<LayoutVM> GetAllDatas()
-		{
-			var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var user = await _userManager.FindByIdAsync(userId);
-			var datas = _context.Settings.AsEnumerable().ToDictionary(m => m.Key, m => m.Value);
-			var news = await _newsService.GetAllWithIncludesAsync();
+        public async Task<LayoutVM> GetAllDatas()
+        {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = userId != null ? await _userManager.FindByIdAsync(userId) : null;
 
-			var layoutVM = new LayoutVM
-			{
-				SettingDatas = datas,
-				UserFullName = user?.FullName,
-				UserEmail = user?.Email,
-				News = news.ToList(),
-				Image = user.Image,
-				UserPhone = user.PhoneNumber,
-				UserAddress = user.UserAddress,
+            var datas = _context.Settings.AsEnumerable().ToDictionary(m => m.Key, m => m.Value);
+            var news = await _newsService.GetAllWithIncludesAsync();
 
-			};
+            var layoutVM = new LayoutVM
+            {
+                SettingDatas = datas,
+                UserFullName = user?.FullName ?? "Guest User", // Populate with "Guest User" when not logged in
+                UserEmail = user?.Email,
+                News = news.ToList(),
+                //Image = user?.Image,
+                UserPhone = user?.PhoneNumber,
+                //UserAddress = user?.UserAddress,
+            };
+                    
+            return layoutVM;
+        }
 
-			return layoutVM;
-		}
 
-	}
+    }
 }

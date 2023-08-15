@@ -6,7 +6,7 @@
     <div class="container my-5">
         <form method="post" asp-controller="Category" asp-action="Create" enctype="multipart/form-data">
             <input asp-for="Image" class="form-control" />
-            <sp anasp-validation-for="Image" class="text-danger d-block"></sp>
+            <span asp-validation-for="Image" class="text-danger d-block"></span>
             <input class="form-control" placeholder="Category Name" asp-for="Name" id="category-name" rows="3"></input>
             <span class="text-danger d-block" asp-validation-for="Name"></span>
 

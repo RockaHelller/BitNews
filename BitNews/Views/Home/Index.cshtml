@@ -16,12 +16,12 @@
                             <div class="entry item">
                                 <div class="thumb-bg-holder thumb-container thumb-65">
                                     <img src="~/assets/img/Slider/@item.Image" src="~/assets/img/home/img-1.jpg" alt="">
-                                    <a href="single-post.html" class="thumb-url"></a>
+                                    <a class="thumb-url"></a>
                                     <div class="bottom-gradient"></div>
                                 </div>
 
                                 <div class="thumb-text-holder">
-                                    <a href="single-post.html" class="entry-meta-category">@item.Title</a>
+                                    <a class="entry-meta-category">@item.Title</a>
                                     <h1 class="thumb-entry-title">
                                         <a href="single-post.html">
                                             @item.Description
@@ -40,9 +40,9 @@
                             {
                                 <div class="col-lg-4 col-md-6">
                                     <article class="entry">
-                                        <a href="categories.html" class="entry-meta-category">@item.Name</a>
+                                        <a asp-controller="News" asp-action="Index" class="entry-meta-category">@item.Name</a>
                                         <div class="entry-img-holder">
-                                            <a href="single-post.html">
+                                            <a asp-controller="News" asp-action="Index">
                                                 <div class="thumb-container thumb-60">
                                                     <img src="~/assets/img/Category/@item.Image" class="entry-img" alt="" />
                                                 </div>
@@ -364,7 +364,7 @@
                     <div class="col-lg-3 col-md-6">
                         <article class="entry">
                             <div class="entry-img-holder">
-                                <a asp-controller="News" asp-action="Index" asp-route-id="@item.Id">
+                                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">
                                     <div class="thumb-container thumb-60">
                                         <img src="~/assets/img/News/@item.Images.FirstOrDefault().Image" class="entry-img" alt="" />
                                     </div>
@@ -373,7 +373,7 @@
                             <div class="entry-body">
                                 <div class="entry-header">
                                     <h2 class="entry-title">
-                                        <a asp-controller="News" asp-action="Index" asp-route-id="@item.Id">@item.Title</a>
+                                        <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">@item.Title</a>
                                     </h2>
                                 </div>
                             </div>
