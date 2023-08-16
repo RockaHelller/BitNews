@@ -1,4 +1,5 @@
-﻿using BitNews.Data;
+﻿using BitNews.Areas.Admin.ViewModels.Setting;
+using BitNews.Data;
 using BitNews.Services.Interfaces;
 
 namespace BitNews.Services
@@ -15,5 +16,5 @@ namespace BitNews.Services
 		{
 			return _context.Settings.AsEnumerable().ToDictionary(m => m.Key, m => m.Value);
 		}
-	}
+    }
 }

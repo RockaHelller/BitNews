@@ -36,15 +36,15 @@ namespace BitNews.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var setting = _settingService.GetAll();
+            var settings = await _context.Settings.OrderByDescending(x => x.Key).ToListAsync();
 
             List<SettingVM> modelList = new List<SettingVM>();
 
-            foreach (var item in setting)
+            foreach (var item in settings)
             {
                 var settingVM = new SettingVM
                 {
-                    //Id = item.Id,
+                    Id = item.Id,
                     Key = item.Key,
                     Value = item.Value
                 };
@@ -54,6 +54,7 @@ namespace BitNews.Areas.Admin.Controllers
 
             return View(modelList);
         }
+
 
 
         [HttpGet]
