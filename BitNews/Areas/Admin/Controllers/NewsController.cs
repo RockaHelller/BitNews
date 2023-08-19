@@ -277,6 +277,7 @@ namespace BitNews.Areas.Admin.Controllers
                 .Include(m => m.News) // Include the related news for reference
                 .FirstOrDefaultAsync(m => m.Id == commentId && m.NewsId == newsId);
 
+
             if (comment == null)
             {
                 return NotFound();
