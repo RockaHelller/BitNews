@@ -5,25 +5,47 @@
     ViewData["Title"] = "Detail";
 }
 
+<style>
+    /* Custom CSS */
+    .custom-textarea {
+        border-color: #c6c2c2;
+        /*border: #c6c2c2 ;*/
+        outline: none !important;
+    }
+</style>
+
 <div class="container my-3">
     <div class="card">
-        <div class="card-header">
-            Username: @Model.CreatorName
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Username: @Model.CreatorName</h5>
         </div>
         <div class="card-body">
-            <p class="card-text">
-                <strong>Name:</strong> @Model.Name
-            </p>
-            <p class="card-text">
-                <strong>Email:</strong> @Model.Email
-            </p>
-            <p class="card-text">
-                <strong>Subject:</strong> @Model.Subject
-            </p>
-            <p class="card-text">
-                <strong>Message:</strong> @Model.Message
-            </p>
+            <p class="card-text"><strong>Name:</strong> @Model.Name</p>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text"><strong>Subject:</strong> @Model.Subject</p>
+            <p class="card-text"><strong>Message:</strong> @Model.Message</p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <!-- Separate form for sending email -->
+            @using (Html.BeginForm("Detail", "Contact", new { id = Model.Id }, FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Id)
+                @Html.ValidationSummary()
+
+                <fieldset>
+                    <legend class="text-primary">Respond to Email</legend>
+                    <div class="form-group">
+                        <label for="body">Body:</label>
+                        @Html.TextAreaFor(m => m.EmailModel.Body, new { required = "required", @class = "form-control custom-textarea", rows = "6" })
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="Send" class="btn btn-success" />
+                    </div>
+                </fieldset>
+            }
         </div>
     </div>
 </div>
-

@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewComponents\" />
-    <Folder Include="Views\Shared\Components\Footer\" />
-    <Folder Include="Views\Shared\Components\Header\" />
     <Folder Include="wwwroot\assets\img\Category\" />
   </ItemGroup>
 

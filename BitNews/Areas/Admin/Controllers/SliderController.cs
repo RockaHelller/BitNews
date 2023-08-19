@@ -24,7 +24,7 @@ namespace BitNews.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index() => View(await _sliderService.GetAllMappedDatasAsync());
+        public async Task<IActionResult> Index() =>  View(await _sliderService.GetAllMappedDatasAsync());
 
         [HttpGet]
         public async Task<IActionResult> Detail(int? id)

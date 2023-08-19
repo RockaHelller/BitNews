@@ -20,41 +20,32 @@ namespace BitNews.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-            //Contact contact = await _context.Contacts.FirstOrDefaultAsync();
-
-            //Contact model = contact;
-
-            ////ContactVM model = new ContactVM
-            ////{
-            ////    Contacts = new List<Contact> { contact }
-            ////};
-
-            //return View(model);
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateContact(Contact model)
         {
-
-
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                _context.Contacts.Add(model);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    model.CreatorName = User.Identity.Name; // Set the CreatorName from authenticated user
+
+                    _context.Contacts.Add(model);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                // Handle the case where the user is not authenticated (e.g., show an error message)
+                ModelState.AddModelError("", "You must be logged in to submit a contact.");
             }
 
-            return View(model);
+            return View("Index", model); // Return to the contact form with errors
         }
-
-
-
-
-
-
-
 
     }
 

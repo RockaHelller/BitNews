@@ -12,43 +12,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BitNews.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
     [Authorize]
     public class NewsController : Controller
-	{
-		private readonly INewsService _newsService;
-		private readonly ISettingService _settingService;
-		private readonly ICategoryService _categoryService;
-		private readonly ITagService _tagsService;
-		private readonly AppDbContext _context;
+    {
+        private readonly INewsService _newsService;
+        private readonly ISettingService _settingService;
+        private readonly ICategoryService _categoryService;
+        private readonly ITagService _tagsService;
+        private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
 
 
 
         public NewsController(INewsService newsService,
-									 ISettingService settingService,
-									 ICategoryService categoryService,
-									 AppDbContext context, 
+                                     ISettingService settingService,
+                                     ICategoryService categoryService,
+                                     AppDbContext context,
                                      IWebHostEnvironment env,
                                      ITagService tagsService)
-		{
-			_newsService = newsService;
-			_settingService = settingService;
-			_categoryService = categoryService;
-			_context = context;
+        {
+            _newsService = newsService;
+            _settingService = settingService;
+            _categoryService = categoryService;
+            _context = context;
             _env = env;
             _tagsService = tagsService;
-		}
+        }
 
-		private async Task GetAllSelectOptions()
-		{
-			ViewBag.categories = await GetCategories();
-		}
-		private async Task<SelectList> GetCategories()
-		{
-			IEnumerable<Category> categories = await _categoryService.GetAll();
-			return new SelectList(categories, "Id", "Name");
-		}
+        private async Task GetAllSelectOptions()
+        {
+            ViewBag.categories = await GetCategories();
+        }
+        private async Task<SelectList> GetCategories()
+        {
+            IEnumerable<Category> categories = await _categoryService.GetAll();
+            return new SelectList(categories, "Id", "Name");
+        }
 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1)
@@ -205,7 +205,7 @@ namespace BitNews.Areas.Admin.Controllers
                 Description = existNews.Description,
                 CategoryId = existNews.CategoryId,
                 Tags = tagCheckBoxes,
-                
+
             };
 
             var categories = await _context.Categories.ToListAsync();
@@ -242,23 +242,71 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Comments(int id)
+        {
+            var news = await _newsService.GetByIdAsync(id);
+
+            if (news == null)
+            {
+                return NotFound();
+            }
+
+            var comments = await _context.Comments
+                .Where(comment => comment.NewsId == id)
+                .ToListAsync();
+
+            var newsComments = comments.Select(comment => new NewsCommentVM
+            {
+                Name = comment.Name,
+                Text = comment.Text,
+                CreateDate = comment.CreateDate.ToString("dddd, dd MMMM yyyy"),
+                CreatorName = comment.CreatorName
+            }).ToList();
+
+            ViewBag.NewsTitle = news.Title;
+
+            return View(newsComments);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteComment(int newsId, int commentId)
+        {
+            var comment = await _context.Comments
+                .Include(m => m.News) // Include the related news for reference
+                .FirstOrDefaultAsync(m => m.Id == commentId && m.NewsId == newsId);
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            // Redirect back to the comments page for the specific news
+            return RedirectToAction("Comments", new { id = newsId });
+        }
+
+
 
 
         [HttpGet]
-		public async Task<IActionResult> Detail(int? id)
-		{
-			if (id is null)
-				return BadRequest();
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id is null)
+                return BadRequest();
 
-			var news = await _newsService.GetByIdWithAllIncludes(id.Value);
+            var news = await _newsService.GetByIdWithAllIncludes(id.Value);
 
-			if (news is null)
-				return NotFound();
+            if (news is null)
+                return NotFound();
 
-			var newsDetail = _newsService.GetMappedData(news);
+            var newsDetail = _newsService.GetMappedData(news);
 
-			return View(newsDetail);
-		}
+            return View(newsDetail);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -291,10 +339,12 @@ namespace BitNews.Areas.Admin.Controllers
 
 
 
+
+
         private bool IsImageFile(IFormFile file)
-		{
-			return file.ContentType.StartsWith("image/");
-		}
+        {
+            return file.ContentType.StartsWith("image/");
+        }
 
 
         private bool IsCheckedTag(int? id, Tag item)

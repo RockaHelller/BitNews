@@ -34,10 +34,12 @@ namespace BitNews.Controllers
             _layoutService = layoutService;
         }
 
-        public async Task<IActionResult> Index(string[] selectedTags, int page = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string[] selectedTags, string sort, int page = 1, int pageSize = 10)
         {
 
             ViewBag.PageSize = pageSize;
+
+          
 
             var news = await _newsService.GetAllWithIncludesAsync();
 
@@ -49,7 +51,6 @@ namespace BitNews.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            //IEnumerable<News> model = await _newsService.GetAllWithIncludesAsync();
             IEnumerable<Category> categories = await _categoryService.GetAll();
             List<NewsVM> model = new List<NewsVM>();
             var datas = await _layoutService.GetAllDatas();
@@ -82,7 +83,7 @@ namespace BitNews.Controllers
             return View(paginatedModel);
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Detail(int? id)
         {
             if (id is null) return BadRequest();
@@ -90,6 +91,7 @@ namespace BitNews.Controllers
             News news = await _context.News
                 .Include(m => m.Images)
                 .Include(m => m.Category)
+                .Include(m => m.Comments)
                 .Include(m => m.NewsTags)
                     .ThenInclude(nt => nt.Tag) // Include the related Tag entity
                 .Where(m => !m.SoftDelete)
@@ -111,11 +113,39 @@ namespace BitNews.Controllers
                 CreateDate = news.CreateDate.ToString("dd MMMM yyyy"),
                 View = datas,
                 News = datas.News,
-                CreatorName = news.CreatorName
+                CreatorName = news.CreatorName,
+                Comments = news.Comments,
             };
 
             return View(model);
         }
+
+        //int newsId, string text,
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PostComment(int id, ViewModels.NewsDetailVM model)
+        {
+            
+                var comment = new Comment
+                {
+                    Name = model.Name,
+                    Text = model.Text,
+                    CreatorName = model.CreatorName,
+                    NewsId = model.Id,
+                    
+                };
+
+                _context.Comments.Add(comment);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Detail", new { id = model.Id });
+
+            // If ModelState is not valid, return the view with the model
+            //return View("Detail", model); // You might need to specify the full view name if needed
+        }
+
+
+
 
 
 

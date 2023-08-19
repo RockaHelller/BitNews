@@ -135,7 +135,7 @@ namespace BitNews.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var setting = await _context.Settings.FirstOrDefaultAsync();
+            var setting = await _context.Settings.FirstOrDefaultAsync(s => s.Id == id);
 
             if (setting != null)
             {
@@ -145,6 +145,7 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
 
 
 

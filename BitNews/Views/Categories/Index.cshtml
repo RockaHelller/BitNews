@@ -14,9 +14,9 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <article class="entry">
-                            <a href="categories.html" class="entry-meta-category">@category.Name</a>
+                            <a asp-controller="News" asp-action="Index" asp-route-id="@category.Id" class="entry-meta-category">@category.Name</a>
                             <div class="entry-img-holder">
-                                <a href="single-post.html">
+                                <a asp-controller="News" asp-action="Index" asp-route-id="@category.Id">
                                     <div class="thumb-container thumb-65">
                                         <img src="~/assets/img/Category/@category.Image" class="entry-img" alt="" />
                                     </div>

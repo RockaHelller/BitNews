@@ -11,7 +11,6 @@
         public ICollection<NewsImage> Images { get; set; }
         public ICollection<NewsTag> NewsTags { get; set; }
         public string CreatorName { get; set; }
-
-
+        public ICollection<Comment> Comments { get; set; }
     }
 }

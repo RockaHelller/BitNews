@@ -4,6 +4,14 @@
     ViewData["Title"] = "Detail";
 }
 
+<style>
+    .comment-body {
+        margin-bottom: 0px;
+        border-top: 0px;
+        border-bottom: 1px solid #E2E1E8;
+    }
+</style>
+
 
 <main class="main oh" id="main">
 
@@ -32,15 +40,15 @@
                                     <a href="#">
                                         @*<img src="~/assets/img/blog/author.png" alt="">*@
                                         @*<span>by</span>*@
-                            @*            <span class="entry-meta-author-name">
-                                                @Model.CreatorName
+                                        @*            <span class="entry-meta-author-name">
+                                        @Model.CreatorName
                                         </span>*@
                                     </a>
                                 </li>
                                 <li class="entry-meta-date">
                                     @Model.CreateDate
-                               
-                                </li>   
+
+                                </li>
                             </ul>
                         </div>
 
@@ -125,69 +133,32 @@
                     </article> <!-- end standard post -->
                     <!-- Comments -->
                     <div class="entry-comments mt-30">
-                        <h5 class="entry-comments-title">3 comments</h5>
+                        <h5 class="entry-comments-title">@Model.Comments.Count() Comments</h5>
                         <ul class="comment-list">
-                            <li class="comment">
-                                <div class="comment-body">
-                                    <div class="comment-avatar">
-                                        <img alt="" src="~/assets/img/blog/comment_1.jpg">
-                                    </div>
-                                    <div class="comment-text">
-                                        <h6 class="comment-author">Joeby Ragpa</h6>
-                                        <div class="comment-metadata">
-                                            <a href="#" class="comment-date">July 17, 2017 at 12:48 pm</a>
-                                        </div>
-                                        <p>
-                                            This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very
-                                            useful, you can launch your online store in few seconds. I will rate 5 stars.
-                                        </p>
-                                        <a href="#" class="comment-reply">Reply</a>
-                                    </div>
-                                </div>
-
-                                <ul class="children">
-                                    <li class="comment">
-                                        <div class="comment-body">
-                                            <div class="comment-avatar">
-                                                <img alt="" src="~/assets/img/blog/comment_2.jpg">
-                                            </div>
-                                            <div class="comment-text">
-                                                <h6 class="comment-author">Alexander Samokhin</h6>
-                                                <div class="comment-metadata">
-                                                    <a href="#" class="comment-date">July 17, 2017 at 12:48 pm</a>
+                            @foreach (var item in Model.Comments)
+                            {
+                                <li class="comment">
+                                    <div class="comment-body">
+                                        <div class="comment-text">
+                                            <div class="comment-metadata">
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <h5 class="comment-author">@item.Name</h5>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <a class="comment-date">@Model.CreateDate</a>
+                                                    </div>
                                                 </div>
-                                                <p>
-                                                    This template is so awesome. I didn’t expect so many features inside. E-commerce pages are
-                                                    very useful, you can launch your online store in few seconds. I will rate 5 stars.
-                                                </p>
-                                                <a href="#" class="comment-reply">Reply</a>
                                             </div>
+                                            <h5 style="word-wrap: break-word;">
+                                                @item.Text
+                                            </h5>
                                         </div>
-                                    </li> <!-- end reply comment -->
-                                </ul>
-
-                            </li> <!-- end 1-2 comment -->
-
-                            <li>
-                                <div class="comment-body">
-                                    <div class="comment-avatar">
-                                        <img alt="" src="~/assets/img/blog/comment_3.jpg">
                                     </div>
-                                    <div class="comment-text">
-                                        <h6 class="comment-author">Chris Root</h6>
-                                        <div class="comment-metadata">
-                                            <a href="#" class="comment-date">July 17, 2017 at 12:48 pm</a>
-                                        </div>
-                                        <p>
-                                            This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very
-                                            useful, you can launch your online store in few seconds. I will rate 5 stars.
-                                        </p>
-                                        <a href="#" class="comment-reply">Reply</a>
-                                    </div>
-                                </div>
-                            </li> <!-- end 3 comment -->
-
+                                </li>
+                            }
                         </ul>
+
                     </div> <!-- end comments -->
                     <!-- Comment Form -->
                     <div id="respond" class="comment-respond">
@@ -196,33 +167,27 @@
                             Your email address will not be published. Required fields are
                             marked*
                         </span>
-                        <form id="form" class="comment-form" method="post" action="#">
-                            <p class="comment-form-comment">
-                                <label for="comment">Comment*</label>
-                                <textarea id="comment" name="comment" rows="6" required="required"></textarea>
-                            </p>
-
+                        <form asp-controller="News" asp-action="PostComment" id="form" class="comment-form" method="post">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="name">Name*</label>
-                                    <input name="name" id="name" type="text">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="email">Email*</label>
-                                    <input name="email" id="email" type="email">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="website">Website</label>
-                                    <input name="website" id="website" type="text">
+                                <div class="col-lg-6">
+                                    <label for="Name">Name*</label>
+                                    <input asp-for="Name" id="Name" type="text" required>
                                 </div>
                             </div>
 
-                            <p class="comment-form-submit">
-                                <input type="submit" class="btn btn-lg btn-color btn-button" value="Post a Comment"
-                                       id="submit-message">
+                            <input hidden asp-for="CreatorName" name="CreatorName" value="@User.Identity.Name" />
+
+                            <p class="comment-form-comment">
+                                <label for="Text">Comment*</label>
+                                <textarea asp-for="Text" id="Text" rows="6" required="required"></textarea>
                             </p>
 
+                            <p class="comment-form-submit">
+                                <input type="hidden" asp-for="Id" name="Id" />
+                                <input type="submit" class="btn btn-lg btn-color btn-button" value="Post a Comment" id="submit-message">
+                            </p>
                         </form>
+
                     </div> <!-- end comment form -->
 
                 </div> <!-- end post content -->

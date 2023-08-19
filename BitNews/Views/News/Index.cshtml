@@ -7,6 +7,9 @@
     var distinctCategories = Model.Datas.Select(item => item.CategoryName).Distinct();
     //var distinctTags = Model.Datas.Select(item => item.Tag).Distinct();
 
+
+
+
 }
 
 
@@ -23,13 +26,11 @@
                         <div class="container">
                             <select name="sort" class="w-75 mb-1">
                                 <option value="">Sort By</option>
-                                <option value="alphabet" selected="@(ViewBag.SortBy == "alphabet" ? "selected" : null)">Alphabet</option>
-                                <option value="popular" selected="@(ViewBag.SortBy == "popular" ? "selected" : null)">Popular</option>
                                 <option value="latest" selected="@(ViewBag.SortBy == "latest" ? "selected" : null)">Latest News</option>
+                                <option value="oldest" selected="@(ViewBag.SortBy == "oldest" ? "selected" : null)">Oldest News</option>
                             </select>
                             <form id="pageSizeForm" asp-action="Index" method="get">
                                 <select id="pageSizeSelect" name="pageSize" class="w-75 mb-1" onchange="submitForm()">
-
                                     <option>Show Item</option>
                                     <option value="6" select=@(ViewBag.PageSize == 6 ? "selected" : "")>Show 6</option>
                                     <option value="12" select=@(ViewBag.PageSize == 12 ? "selected" : "")>Show 12</option>
@@ -168,6 +169,8 @@
                 }
             }
 
+
+
             // Handle checkbox change event
             $('input[type="checkbox"]').on('change', filterNewsByTag);
 
@@ -178,11 +181,6 @@
         function submitForm() {
             document.getElementById('pageSizeForm').submit();
         }
-
-
-
-
-
-
+      
     </script>
 }

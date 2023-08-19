@@ -1,0 +1,99 @@
+﻿@model List<NewsCommentVM>
+@{
+    ViewData["Title"] = "Comments";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #comments {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-right: 1px solid grey;
+        }
+
+        td {
+            max-width: 450px; /* Adjust this value as needed */
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ccc;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="comments">
+        <h1>@ViewBag.NewsTitle Comments</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Text</th>
+                    <th>Creator Name</th>
+                    <th>Creation Date</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model)
+                {
+                    <tr>
+                        <td>@comment.Name</td>
+                        <td>@comment.Text</td>
+                        <td>@comment.CreatorName</td>
+                        <td>@comment.CreateDate</td>
+                        <td>
+                            <div class="action-btn-group">
+                                <form method="post" asp-action="DeleteComment" asp-route-id="@comment.Id"
+                                      onsubmit="return confirm('Are you sure you want to delete this Comment?')">
+                                    <button type="submit" class="btn btn-danger btn-rounded btn-fw action-btn">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+
+</body>
+</html>

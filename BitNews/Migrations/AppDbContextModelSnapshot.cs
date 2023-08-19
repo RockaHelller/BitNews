@@ -157,6 +157,42 @@ namespace BitNews.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("BitNews.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NewsId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SoftDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("BitNews.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -504,6 +540,17 @@ namespace BitNews.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BitNews.Models.Comment", b =>
+                {
+                    b.HasOne("BitNews.Models.News", "News")
+                        .WithMany("Comments")
+                        .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("News");
+                });
+
             modelBuilder.Entity("BitNews.Models.News", b =>
                 {
                     b.HasOne("BitNews.Models.Category", "Category")
@@ -603,6 +650,8 @@ namespace BitNews.Migrations
 
             modelBuilder.Entity("BitNews.Models.News", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Images");
 
                     b.Navigation("NewsTags");

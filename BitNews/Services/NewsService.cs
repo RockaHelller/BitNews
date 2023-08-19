@@ -34,19 +34,16 @@ namespace BitNews.Services
                                                                                             Include(m => m.NewsTags).ThenInclude(m => m.Tag).
                                                                                             FirstOrDefaultAsync(m => m.Id == id);
 
-
-
         public async Task<News> GetByIdWithAllIncludes(int id)
         {
             return await _context.News
                 .Include(p => p.Category)
                 .Include(p => p.Images)
+                .Include(p => p.Comments)
                 .Include(p => p.NewsTags)
                 .ThenInclude(p => p.Tag)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
-
-
 
         public NewsDetailVM GetMappedData(News news)
         {
@@ -60,11 +57,9 @@ namespace BitNews.Services
                 NewsTags = news.NewsTags,
                 CreateDate = news.CreateDate.ToString("dddd, dd MMMM yyyy"),
                 CreatorName = news.CreatorName,
-                
             };
             return newsDetail;
         }
-
 
         public async Task CreateAsync(NewsCreateVM model)
         {
@@ -168,7 +163,7 @@ namespace BitNews.Services
                     {
                         NewsId = news.Id,
                         TagId = item.Id,
-                       
+
                     });
                 }
             }

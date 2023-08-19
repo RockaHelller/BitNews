@@ -9,6 +9,8 @@ namespace BitNews.ViewModels
 		public List<News> News { get; set; }
 		public List<Category> Categories { get; set; }
         public LayoutVM View { get; set; }
+        public Dictionary<string, string> SettingDatas { get; set; }
+
 
 
     }
