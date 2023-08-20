@@ -142,10 +142,10 @@
                                         <div class="comment-text">
                                             <div class="comment-metadata">
                                                 <div class="row">
-                                                    <div class="col-10">
+                                                    <div class="col-8">
                                                         <h5 class="comment-author">@item.Name</h5>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-4">
                                                         <a class="comment-date">@Model.CreateDate</a>
                                                     </div>
                                                 </div>
@@ -181,11 +181,23 @@
                                 <label for="Text">Comment*</label>
                                 <textarea asp-for="Text" id="Text" rows="6" required="required"></textarea>
                             </p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <p class="comment-form-submit">
+                                    <input type="hidden" asp-for="Id" name="Id" />
+                                    <input type="submit" class="btn btn-lg btn-color btn-button" value="Post a Comment" id="submit-message">
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="comment-form-submit">
+                                    <input type="hidden" asp-for="Id" name="Id" />
+                                    <a asp-controller="Account" asp-action="SignIn">
+                                        <input class="btn btn-lg btn-color btn-button" value="Post a Comment" id="submit-message">
+                                    </a>
+                                </p>
+                            }
 
-                            <p class="comment-form-submit">
-                                <input type="hidden" asp-for="Id" name="Id" />
-                                <input type="submit" class="btn btn-lg btn-color btn-button" value="Post a Comment" id="submit-message">
-                            </p>
                         </form>
 
                     </div> <!-- end comment form -->
@@ -194,7 +206,7 @@
                 <!-- Sidebar -->
                 <aside class="col-lg-4 sidebar sidebar--right widget-setting">
 
-                    <script>!function () { var e = document.getElementsByTagName("script"), t = e[e.length - 1], n = document.createElement("script"); function r() { var e = crCryptocoinPriceWidget.init({ base: "USD,EUR,CNY,GBP", items: "BTC,ETH,LTC,XMR,DASH", backgroundColor: "FFFFFF", streaming: "1", rounded: "1", boxShadow: "1", border: "1" }); t.parentNode.insertBefore(e, t) } n.src = "https://co-in.io/widget/pricelist.js?items=BTC%2CETH%2CLTC%2CXMR%2CDASH", n.async = !0, n.readyState ? n.onreadystatechange = function () { "loaded" != n.readyState && "complete" != n.readyState || (n.onreadystatechange = null, r()) } : n.onload = function () { r() }, t.parentNode.insertBefore(n, null) }();</script>
+                    <script>!function () { var e = document.getElementsByTagName("script"), t = e[e.length - 1], n = document.createElement("script"); function r() { var e = crCryptocoinPriceWidget.init({ base: "USD,EUR,CNY,GBP", items: "BTC,ETH,LTC,DOGE,XRP,XMR,USDC,DASH", backgroundColor: "FFFFFF", streaming: "1", rounded: "1", boxShadow: "1", border: "1" }); t.parentNode.insertBefore(e, t) } n.src = "https://co-in.io/widget/pricelist.js?items=BTC%2CETH%2CXRP%2CUSDC%2CDOGE%2CLTC%2CDASH%2CXMR", n.async = !0, n.readyState ? n.onreadystatechange = function () { "loaded" != n.readyState && "complete" != n.readyState || (n.onreadystatechange = null, r()) } : n.onload = function () { r() }, t.parentNode.insertBefore(n, null) }();</script>
 
                     <!-- Widget Socials -->
                     <div class="widget widget-socials my-5">
@@ -221,7 +233,7 @@
                         </div>
                     </div> <!-- end widget socials -->
                     <!-- Widget Newsletter -->
-                    <div class="widget widget_modal-input_form_widget">
+@*                    <div class="widget widget_modal-input_form_widget">
                         <h4 class="widget-title">Subscribe for News</h4>
                         <form class="modal-input-form" method="post">
                             <div class="modal-input-form-fields">
@@ -236,7 +248,7 @@
                                 <input type="submit" class="btn btn-md btn-color" value="Subscribe">
                             </div>
                         </form>
-                    </div>
+                    </div>*@
 
                     <!-- Widget Popular Posts -->
                     <div class="widget widget-popular-posts">

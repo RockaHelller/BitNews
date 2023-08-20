@@ -57,8 +57,11 @@
                         }
                         else
                         {
-                            <input class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message" onClick="alert('You must log in for contacting')">
-                            <div id="msg" class="message"></div>
+                            <a asp-controller="Account" asp-action="SignIn">
+                                <input class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message">
+                                <div id="msg" class="message"></div>
+                            </a>
+                            
                         }
                     </form>
                 </div>

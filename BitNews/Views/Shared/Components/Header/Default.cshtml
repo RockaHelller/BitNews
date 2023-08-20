@@ -167,16 +167,17 @@ else
                 <img class="logo-img" src="~/assets/img/@Model.SettingDatas["HeaderLogo"]" alt="BitNews Logo">
 
                 <!-- Search -->
+                <!-- Icon to trigger search form -->
                 <div class="nav__mobile-search d-lg-none">
-                    <a href="#" class="nav-search-trigger">
+                    <a href="#" class="nav-search-trigger" id="searchTrigger">
                         <i class="ui-search nav-search-trigger-icon"></i>
                     </a>
                 </div>
 
                 <!-- Search form -->
-                <form role="search" method="get" class="nav-search-form d-lg-none">
-                    <input type="search" class="nav-search-input" placeholder="Type &amp; Hit Enter">
-                    <i class="ui-close nav-search-close"></i>
+                <form role="search" method="get" class="nav-search-form d-lg-none" id="searchForm" style="display: none;">
+                    <input type="search" class="nav-search-input" placeholder="Type &amp; Hit Enter" id="searchInput">
+                    <i class="ui-close nav-search-close" id="searchClose"></i>
                 </form>
 
                 <!-- Advertisement -->
@@ -196,11 +197,12 @@ else
             <div class="flex-parent">
 
                 <!-- Search form -->
-                <form role="search" method="get" class="nav-search-form">
-                    <input type="search" class="nav-search-input" id="nav-search-input"
+                @using (Html.BeginForm("Index", "News", FormMethod.Get, new { @class = "nav-search-form" }))
+                {
+                    <input type="search" class="nav-search-input" name="searchText" id="nav-search-input"
                            placeholder="Type &amp; Hit Enter">
                     <i class="ui-close nav-search-close" id="nav-search-close"></i>
-                </form>
+                }
 
                 <!-- Nav-wrap -->
                 <nav class="flex-child nav-wrap d-none d-lg-block">
@@ -252,10 +254,10 @@ else
                     </div>
 
                     <!-- Subscribe -->
-                    <div class="nav-right-item nav-subscribe">
+@*                    <div class="nav-right-item nav-subscribe">
                         <a href="#" class="nav-subscribe-url" data-toggle="modal"
                            data-target="#subscribe-modal">Subscribe</a>
-                    </div>
+                    </div>*@
 
                     <!-- Search -->
                     <div class="nav-right-item nav-search">

@@ -258,6 +258,7 @@ namespace BitNews.Areas.Admin.Controllers
 
             var newsComments = comments.Select(comment => new NewsCommentVM
             {
+                Id = comment.Id,
                 Name = comment.Name,
                 Text = comment.Text,
                 CreateDate = comment.CreateDate.ToString("dddd, dd MMMM yyyy"),
@@ -265,18 +266,19 @@ namespace BitNews.Areas.Admin.Controllers
             }).ToList();
 
             ViewBag.NewsTitle = news.Title;
+            ViewBag.NewsId = id;
 
             return View(newsComments);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteComment(int newsId, int commentId)
+        public async Task<IActionResult> DeleteComment(int id, int newsId)
         {
-            var comment = await _context.Comments
-                .Include(m => m.News) // Include the related news for reference
-                .FirstOrDefaultAsync(m => m.Id == commentId && m.NewsId == newsId);
 
+            var news = await _context.News.FirstOrDefaultAsync(m => m.Id == newsId);
+
+            var comment = await _context.Comments.FirstOrDefaultAsync(m => m.Id == id);
 
             if (comment == null)
             {

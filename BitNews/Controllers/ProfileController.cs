@@ -68,7 +68,6 @@
 //            if (existProfile is null)
 //                return NotFound();
 
-//            // Get the old image file path from the existing category
 //            var oldImagePath = Path.Combine("wwwroot/assets/img/user_profile_pic", existProfile.Image);
 
 //            if (request.NewImage != null)
@@ -93,11 +92,10 @@
 //                    await request.NewImage.CopyToAsync(fileStream);
 //                }
 
-//                // If a new image is provided, delete the old image from the folder
-//                //if (System.IO.File.Exists(oldImagePath))
-//                //{
-//                //    System.IO.File.Delete(oldImagePath);
-//                //}
+//                if (System.IO.File.Exists(oldImagePath))
+//                {
+//                    System.IO.File.Delete(oldImagePath);
+//                }
 
 //                existProfile.Image = imageName;
 //            }
@@ -110,56 +108,53 @@
 
 
 
-//        //[HttpGet]
-//        //public async Task<IActionResult> EditInfo(int? id)
-//        //{
-//        //    if (id is null) return BadRequest();
-//        //    var existUser = await _context.Users.FirstOrDefaultAsync();
-//        //    if (existUser is null) return NotFound();
+//        [HttpGet]
+//        public async Task<IActionResult> EditInfo(int? id)
+//        {
+//            if (id is null) return BadRequest();
+//            var existUser = await _context.Users.FirstOrDefaultAsync();
+//            if (existUser is null) return NotFound();
 
-//        //    ProfileEditVM model = new()
-//        //    {
-//        //        FullName = existUser.FullName,
-//        //        UserName = existUser.UserName,
-//        //        Email = existUser.Email,
-//        //        Phone = existUser.PhoneNumber,
-//        //        Address = existUser.UserAddress
-//        //    };
+//            ProfileEditVM model = new()
+//            {
+//                FullName = existUser.FullName,
+//                UserName = existUser.UserName,
+//                Email = existUser.Email,
+//            };
 
-//        //    return PartialView("_EditInfoModal", model);
-//        //}
+//            return PartialView("_EditInfoModal", model);
+//        }
 
-//        //[HttpPost]
-//        //[ValidateAntiForgeryToken]
-//        //public async Task<IActionResult> EditInfo(ProfileEditVM model)
-//        //{
-//        //    if (!ModelState.IsValid)
-//        //    {
-//        //        // If the model state is not valid, return to the view with the model to show validation errors.
-//        //        return View(model);
-//        //    }
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task<IActionResult> EditInfo(ProfileEditVM model)
+//        {
+//            if (!ModelState.IsValid)
+//            {
+//                // If the model state is not valid, return to the view with the model to show validation errors.
+//                return View(model);
+//            }
 
-//        //    // Retrieve the current user (or get the user using their ID) from your data source.
-//        //    var existingUser = await _context.Users.FirstOrDefaultAsync();
-//        //    if (existingUser == null)
-//        //    {
-//        //        // Handle the case where the user is not found (optional).
-//        //        return NotFound();
-//        //    }
+//            // Retrieve the current user (or get the user using their ID) from your data source.
+//            var existingUser = await _context.Users.FirstOrDefaultAsync();
+//            if (existingUser == null)
+//            {
+//                // Handle the case where the user is not found (optional).
+//                return NotFound();
+//            }
 
-//        //    // Update the user's profile information with the edited values.
-//        //    existingUser.FullName = model.FullName;
-//        //    existingUser.Email = model.Email;
-//        //    existingUser.PhoneNumber = model.Phone;
-//        //    existingUser.UserAddress = model.Address;
+//            // Update the user's profile information with the edited values.
+//            existingUser.FullName = model.FullName;
+//            existingUser.Email = model.Email;
+//            existingUser.PhoneNumber = model.Phone;
 
-//        //    // Save the changes to the data source.
-//        //    _context.Update(existingUser);
-//        //    await _context.SaveChangesAsync();
+//            // Save the changes to the data source.
+//            _context.Update(existingUser);
+//            await _context.SaveChangesAsync();
 
-//        //    // Redirect to the profile page or any other desired action.
-//        //    return RedirectToAction(nameof(Index));
-//        //}
+//            // Redirect to the profile page or any other desired action.
+//            return RedirectToAction(nameof(Index));
+//        }
 
 
 //    }

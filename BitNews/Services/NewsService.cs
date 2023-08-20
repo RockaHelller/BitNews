@@ -172,6 +172,77 @@ namespace BitNews.Services
         }
 
 
+        //public async Task<List<News>> GetSearchedBlogs(NewsVM model, string searchText = null)
+        //{
+        //    News news = await _context.News
+        //        .Include(n => n.NewsTags)
+        //        .Include(n => n.Images)
+        //        .FirstOrDefaultAsync(n => n.Id == model.Id);
+        //    List<News> searchProducts = new();
+
+        //    foreach (var item in news)
+        //    {
+        //        if (item.Name.ToLower().Contains(searchText))
+        //        {
+        //            searchProducts.Add(item);
+        //        }
+        //    }
+
+        //    return searchProducts;
+        //}
+        public async Task<List<News>> GetSearchedNews(string searchText = null)
+        {
+            var searchedNews = new List<News>();
+
+            // Query the news articles that match the search criteria
+            var newsList = await _context.News
+                .Include(n => n.NewsTags)
+                .ThenInclude(nt => nt.Tag) // Include the Tag entity
+                .Include(n => n.Images)
+                .ToListAsync();
+
+            foreach (var news in newsList)
+            {
+                if (news.Title.ToLower().Contains(searchText.ToLower()) ||
+                    news.Article.ToLower().Contains(searchText.ToLower()) ||
+                    news.Description.ToLower().Contains(searchText.ToLower()) ||
+                    news.NewsTags.Any(tag => tag.Tag.Name.ToLower().Contains(searchText.ToLower())))
+                {
+                    searchedNews.Add(news);
+                }
+            }
+
+            return searchedNews;
+        }
+
+
+        //public async Task<List<News>> GetSearchedNews(string searchText = null)
+        //{
+        //    var searchedNews = new List<News>();
+
+        //    // Convert the search text to lowercase for case-insensitive comparison
+        //    var searchTextLower = searchText?.ToLower();
+
+        //    // Query the news articles that match the search criteria
+        //    var newsList = await _context.News
+        //        .Include(n => n.NewsTags)
+        //        .Include(n => n.Images)
+        //        .ToListAsync();
+
+        //    foreach (var news in newsList)
+        //    {
+        //        if (news.Title.ToLower().Contains(searchTextLower) ||
+        //            news.Article.ToLower().Contains(searchTextLower) ||
+        //            news.Description.ToLower().Contains(searchTextLower))
+        //        {
+        //            searchedNews.Add(news);
+        //        }
+        //    }
+
+        //    return searchedNews;
+        //}
+
+
 
     }
 }
