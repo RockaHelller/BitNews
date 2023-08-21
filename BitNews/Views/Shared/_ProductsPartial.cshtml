@@ -1,46 +1,49 @@
 ﻿@using BitNews.Areas.Admin.ViewModels.News;
 @model Paginate<NewsVM>
 
-@foreach (var item in Model.Datas.OrderByDescending(m=>m.Id))
-{
-    <div class="col-lg-4 col-md-6 filter-category-news" >
-        <article class="entry" data-tag="@item.CategoryName">
-            <div class="entry-img-holder">
-                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">
-                    <div class="thumb-container thumb-65">
-                        <img src="~/assets/img/News/@item.Image" class="entry-img" alt="" />
+
+<div class="row news-container">
+    @foreach (var item in Model.Datas.OrderByDescending(m => m.Id))
+    {
+        <div class="col-lg-4 col-md-6 filter-category-news">
+            <article class="entry" data-tag="@item.CategoryName">
+                <div class="entry-img-holder">
+                    <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">
+                        <div class="thumb-container thumb-65">
+                            <img src="~/assets/img/News/@item.Image" class="entry-img" alt="" />
+                        </div>
+                    </a>
+                </div>
+                <div class="entry-body">
+                    <div class="entry-header">
+                        <h2 class="entry-title entry-title--medium">
+                            <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">@item.Title</a>
+                        </h2>
+                        <ul class="entry-meta">
+                            <li class="entry-meta-author">
+                                <a href="#">
+                                    @if (item.View != null && item.View.UserFullName != null && item.View.UserFullName != "Guest User")
+                                    {
+                                        @*<span class="entry-meta-author-name">@item.View.UserFullName</span>*@
+                                        @item.CreatorName
+                                    }
+                                    else
+                                    {
+                                        @*<span class="entry-meta-author-name">Guest User</span>*@
+                                        @item.CreatorName
+                                    }
+                                </a>
+                            </li>
+                            <li class="entry-meta-date">@item.CreateDate</li>
+                        </ul>
                     </div>
-                </a>
-            </div>
-            <div class="entry-body">
-                <div class="entry-header">
-                    <h2 class="entry-title entry-title--medium">
-                        <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">@item.Title</a>
-                    </h2>
-                    <ul class="entry-meta">
-                        <li class="entry-meta-author">
-                            <a href="#">
-                                @if (item.View != null && item.View.UserFullName != null && item.View.UserFullName != "Guest User")
-                                {
-                                    @*<span class="entry-meta-author-name">@item.View.UserFullName</span>*@
-                                    @item.CreatorName
-                                }
-                                else
-                                {
-                                    @*<span class="entry-meta-author-name">Guest User</span>*@
-                                    @item.CreatorName
-                                }
-                            </a>
-                        </li>
-                        <li class="entry-meta-date">@item.CreateDate</li>
-                    </ul>
+                    <div class="entry-excerpt">
+                        <p>
+                            @item.Description
+                        </p>
+                    </div>
                 </div>
-                <div class="entry-excerpt">
-                    <p>
-                        @item.Description
-                    </p>
-                </div>
-            </div>
-        </article>
-    </div>
-}
+            </article>
+        </div>
+    }
+</div>

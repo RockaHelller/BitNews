@@ -5,11 +5,6 @@
 @{
     ViewData["Title"] = "Index";
     var distinctCategories = Model.Datas.Select(item => item.CategoryName).Distinct();
-    //var distinctTags = Model.Datas.Select(item => item.Tag).Distinct();
-
-
-
-
 }
 
 
@@ -24,11 +19,12 @@
                     <h1 class="page-title h2">All News</h1>
                     <div class="row flex-column">
                         <div class="container">
-                            <select name="sort" class="w-75 mb-1">
+                            <select id="sortSelect" name="sort" class="w-75 mb-1">
                                 <option value="">Sort By</option>
                                 <option value="latest" selected="@(ViewBag.SortBy == "latest" ? "selected" : null)">Latest News</option>
                                 <option value="oldest" selected="@(ViewBag.SortBy == "oldest" ? "selected" : null)">Oldest News</option>
                             </select>
+
                             <form id="pageSizeForm" asp-action="Index" method="get">
                                 <select id="pageSizeSelect" name="pageSize" class="w-75 mb-1" onchange="submitForm()">
                                     <option>Show Item</option>
@@ -38,9 +34,6 @@
                                     <option value="48" select=@(ViewBag.PageSize == 48 ? "selected" : "")>Show 48</option>
                                 </select>
                             </form>
-
-
-
                         </div>
 
                         <div class="shop-widget w-80">
@@ -169,18 +162,35 @@
                 }
             }
 
+            // Function to handle sorting based on selected option
+            function sortNews() {
+                var selectedOption = $('#sortSelect').val();
 
+                // Sort the news articles based on the selected option
+                if (selectedOption === 'oldest') {
+                    $('.filter-category-news').sort(function (a, b) {
+                        return $(a).find('.entry-meta-date').text().localeCompare($(b).find('.entry-meta-date').text());
+                    }).appendTo('.news-container');
+                } else if (selectedOption === 'latest') {
+                    $('.filter-category-news').sort(function (a, b) {
+                        return $(b).find('.entry-meta-date').text().localeCompare($(a).find('.entry-meta-date').text());
+                    }).appendTo('.news-container');
+                }
+            }
+
+            // Handle select change event
+            $('#sortSelect').on('change', sortNews);
 
             // Handle checkbox change event
             $('input[type="checkbox"]').on('change', filterNewsByTag);
 
-            // Initially, trigger the filtering to show the relevant news articles
+            // Initially, trigger the filtering and sorting to show the relevant news articles
             filterNewsByTag();
+            sortNews();
         });
 
         function submitForm() {
             document.getElementById('pageSizeForm').submit();
         }
-      
     </script>
 }
