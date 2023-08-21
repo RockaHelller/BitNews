@@ -210,18 +210,20 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[ActionName("Delete")]
-        //public async Task<IActionResult> SoftDelete(int id)
-        //{
-        //    var existCategory = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
 
-        //    existCategory.SoftDelete = true;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAll()
+        {
+            var categories = await _context.Categories.ToListAsync();
 
-        //    await _context.SaveChangesAsync();
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            _context.Categories.RemoveRange(categories);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

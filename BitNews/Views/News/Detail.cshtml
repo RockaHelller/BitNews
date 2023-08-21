@@ -21,10 +21,8 @@
             <div class="row">
                 <!-- post content -->
                 <div class="col-lg-8 blog-content mb-30">
-
                     <!-- standard post -->
                     <article class="entry">
-
                         <div class="single-post-entry-header entry-header">
                             <a href="#" class="entry-meta-category">Investing</a>
                             <h1 class="single-post-entry-title">
@@ -60,24 +58,6 @@
                         </div>
 
                         <div class="entry-article-wrap">
-
-                            <!-- Share -->
-                            <div class="entry-share">
-                                <div class="sticky-col">
-                                    <div class="socials entry-share-socials">
-                                        <a href="#" class="social social-facebook entry-share-social social--colored-facebook">
-                                            <i class="ui-facebook"></i>
-                                        </a>
-                                        <a href="#" class="social social-twitter entry-share-social social--colored-twitter">
-                                            <i class="ui-twitter"></i>
-                                        </a>
-                                        <a href="#" class="social social-google-plus entry-share-social social--colored-google">
-                                            <i class="ui-google"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div> <!-- share -->
-
                             <div class="entry-article">
                                 <p>
                                     @foreach (var item in Model.Article)
@@ -88,7 +68,11 @@
 
                                 <!-- tags -->
                                 <div class="entry-tags">
-                                    <span class="entry-tags-label">Tags:</span>
+                                    @if (Model.NewsTags.Count != 0)
+                                    {
+                                        <span class="entry-tags-label">Tags:</span>
+
+                                    }
                                     @foreach (var item in Model.NewsTags)
                                     {
                                         <a href="#" rel="tag">@item.Tag.Name</a>
@@ -104,23 +88,26 @@
                         <div class="related-posts">
                             <h5 class="related-posts-title">You Might Like</h5>
                             <div class="row">
-                                @foreach (var item in Model.News.Take(3))
+                                @foreach (var relatedPost in Model.News
+                                .Where(np => np.Id != Model.Id &&
+                                (np.NewsTags.Any(nt => Model.NewsTags.Any(relatedTag => relatedTag.TagId == nt.TagId)) ||
+                                np.Category.Name == Model.CategoryName))
+                                .Take(3))
                                 {
                                     <div class="col-md-4">
                                         <article class="entry">
                                             <a href="categories.html" class="entry-meta-category">education</a>
                                             <div class="entry-img-holder">
-                                                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">
+                                                <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">
                                                     <div class="thumb-container thumb-60">
-                                                        <img src="~/assets/img/News/@item.Images.FirstOrDefault().Image"
-                                                             class="entry-img " alt="" />
+                                                        <img src="~/assets/img/News/@relatedPost.Images.FirstOrDefault().Image" class="entry-img " alt="" />
                                                     </div>
                                                 </a>
                                             </div>
                                             <div class="entry-body">
                                                 <div class="entry-header">
                                                     <h2 class="entry-title">
-                                                        <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">@item.Title</a>
+                                                        <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">@relatedPost.Title</a>
                                                     </h2>
                                                 </div>
                                             </div>
@@ -208,50 +195,7 @@
 
                     <script>!function () { var e = document.getElementsByTagName("script"), t = e[e.length - 1], n = document.createElement("script"); function r() { var e = crCryptocoinPriceWidget.init({ base: "USD,EUR,CNY,GBP", items: "BTC,ETH,LTC,DOGE,XRP,XMR,USDC,DASH", backgroundColor: "FFFFFF", streaming: "1", rounded: "1", boxShadow: "1", border: "1" }); t.parentNode.insertBefore(e, t) } n.src = "https://co-in.io/widget/pricelist.js?items=BTC%2CETH%2CXRP%2CUSDC%2CDOGE%2CLTC%2CDASH%2CXMR", n.async = !0, n.readyState ? n.onreadystatechange = function () { "loaded" != n.readyState && "complete" != n.readyState || (n.onreadystatechange = null, r()) } : n.onload = function () { r() }, t.parentNode.insertBefore(n, null) }();</script>
 
-                    <!-- Widget Socials -->
-                    <div class="widget widget-socials my-5">
-                        <div class="socials justify-content-center">
-                            <a class="social social-facebook" href="#" title="facebook" target="_blank" aria-label="facebook">
-                                <i class="ui-facebook"></i>
-                            </a>
-                            <a class="social social-twitter" href="#" title="twitter" target="_blank" aria-label="twitter">
-                                <i class="ui-twitter"></i>
-                            </a>
-                            <a class="social social-google-plus" href="#" title="google" target="_blank" aria-label="google">
-                                <i class="ui-google"></i>
-                            </a>
-                            <a class="social social-instagram" href="#" title="instagram" target="_blank"
-                               aria-label="instagram">
-                                <i class="ui-instagram"></i>
-                            </a>
-                            <a class="social social-youtube" href="#" title="youtube" target="_blank" aria-label="youtube">
-                                <i class="ui-youtube"></i>
-                            </a>
-                            <a class="social social-rss" href="#" title="rss" target="_blank" aria-label="rss">
-                                <i class="ui-rss"></i>
-                            </a>
-                        </div>
-                    </div> <!-- end widget socials -->
-                    <!-- Widget Newsletter -->
-@*                    <div class="widget widget_modal-input_form_widget">
-                        <h4 class="widget-title">Subscribe for News</h4>
-                        <form class="modal-input-form" method="post">
-                            <div class="modal-input-form-fields">
-                                <div class="form-group">
-                                    <i class="ui-user"></i>
-                                    <input type="text" name="NAME" placeholder="Your name" required="">
-                                </div>
-                                <div class="form-group">
-                                    <i class="ui-email"></i>
-                                    <input type="email" name="EMAIL" placeholder="Your email" required="">
-                                </div>
-                                <input type="submit" class="btn btn-md btn-color" value="Subscribe">
-                            </div>
-                        </form>
-                    </div>*@
-
-                    <!-- Widget Popular Posts -->
-                    <div class="widget widget-popular-posts">
+                    <div class="widget widget-popular-posts my-5">
                         <h4 class="widget-title">Popular Posts</h4>
 
                         <ul class="widget-popular-posts-list">

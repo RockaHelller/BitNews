@@ -12,6 +12,8 @@ namespace BitNews.Services.Interfaces
         SliderDetailVM GetMappedData(Slider slider);
         Task CreateAsync(List<IFormFile> images, string title, string description);
         Task DeleteAsync(int id);
+        Task DeleteAllAsync(int id);
+
         Task EditAsync(int id, SliderEditVM model);
         Task<List<Slider>> GetAllByStatusAsync();
         Task<int> GetCountAsync();

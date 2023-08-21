@@ -2,12 +2,11 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-widgets">
-            <div class="row">
-
+            <div class="row justify-content-between">
                 <div class="col-lg-4 col-md-6">
                     <div class="widget">
                         <a asp-controller="Home" asp-action="Index">
-                            <img src="~/assets/img/@Model.SettingDatas["HeaderLogo"]" class="logo-img" alt="">
+                            <img src="~/assets/img/@Model.SettingDatas["Logo"]" class="logo-img" alt="">
                         </a>
                         <p class="mt-20 mb-30">
                             Cryptocurrency news blog and investment strategy guide. All you
@@ -32,27 +31,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-5 col-md-6">
-                    <div class="widget donate">
-                        <h4 class="widget-title">Donate</h4>
-                        <ul class="donate-list">
-                            <li class="donate-item">
-                                <span class="donate_label">BTC:</span>
-                                3CMCRgEm8HVz3DrWaCCid3vAANE42jcEv9
-                            </li>
-                            <li class="donate-item">
-                                <span class="donate_label">LTC:</span>
-                                LTdsVS8VDw6syvfQADdhf2PHAm3rMGJvPX
-                            </li>
-                            <li class="donate-item">
-                                <span class="donate_label">ETH:</span>
-                                0x0074709077B8AE5a245E4ED161C971Dc4c3C8E2B
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="widget widget_nav_menu">
                         <h4 class="widget-title">Useful Links</h4>
@@ -72,9 +50,10 @@
     <div class="footer-bottom">
         <div class="container text-center">
             <span class="copyright">
-                &copy; 2023 BitNews | Made by <a href="https://az.linkedin.com/in/murad-jafarov-949800279?original_referer=https%3A%2F%2Fwww.google.com%2F">
-                    Murad
-                    Jafarov
+                @Html.Raw(@Model.SettingDatas["CopyRight"])
+                @*&copy; 2023 BitNews | Made by*@
+                <a href="@Model.SettingDatas["CreatorLinkedin"]">
+                    @Html.Raw(@Model.SettingDatas["Creator"])
                 </a>
             </span>
         </div>

@@ -74,6 +74,16 @@ namespace BitNews.Services
             }
         }
 
+        public async Task DeleteAllAsync(int id)
+        {
+            var slider = await _context.Sliders.ToListAsync();
+
+            _context.Sliders.RemoveRange(slider);
+            await _context.SaveChangesAsync();
+
+        }
+
+
         public async Task EditAsync(int id, SliderEditVM model)
         {
             var slider = await GetWithIncludesAsync(id);

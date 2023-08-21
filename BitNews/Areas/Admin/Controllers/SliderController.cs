@@ -80,6 +80,16 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAll(int id)
+        {
+            await _sliderService.DeleteAllAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {

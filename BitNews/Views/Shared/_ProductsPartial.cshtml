@@ -1,8 +1,15 @@
 ﻿@using BitNews.Areas.Admin.ViewModels.News;
 @model Paginate<NewsVM>
 
+<style>
+    .news-container {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+</style>
 
-<div class="row news-container">
+@*<div class="row news-container">*@
+<div class="row news-container d-flex">
     @foreach (var item in Model.Datas.OrderByDescending(m => m.Id))
     {
         <div class="col-lg-4 col-md-6 filter-category-news">

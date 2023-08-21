@@ -4,7 +4,6 @@
 }
 
 <div class="container my-5">
-    <h4>Create Tag</h4>
     <form method="post" asp-controller="Tag" asp-action="Create">
         <input placeholder="Tag name" class="form-control" name="Name" asp-for="Name" id="Tag-name">
         <span class="text-danger d-block" asp-validation-for="Name"></span>

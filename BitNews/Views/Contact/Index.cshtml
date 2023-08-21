@@ -4,23 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<main>
+<style>
+    .page-subtitle{
+        max-width: none;
+    }
+</style>
 
-    <!-- Content -->
+<main>
     <section class="section-wrap main-content">
         <div class="container">
-            <div class="row">
-
-                <div class="col-lg-8 blog-content mb-30">
-                    <h1 class="page-title h2">Contact</h1>
+            <div class="row justify-content-center">
+                <div class="col-lg-9 blog-content mb-30">
                     <p class="page-subtitle">
-                        We are optimists who love to work together and Creating an awesome magazine
-                        store.
+                        We are optimists who love to work together and Creating an awesome cryptocurrency news site.
                         Don't hesitate to get in touch. We will reply you as soon as possible.
                     </p>
-
-
-                    <!-- Contact Form -->
                     <form asp-action="CreateContact" method="post" id="contact-form" class="contact-form mt-30 mb-30">
                         <div class="row">
                             <input hidden asp-for="CreatorName" name="CreatorName" value="@User.Identity.Name" />
@@ -28,19 +26,19 @@
                             <div class="col-lg-4">
                                 <div class="contact-name">
                                     <label for="name">Name <abbr title="required" class="required">*</abbr></label>
-                                    <input asp-for="Name" name="name" id="name" type="text">
+                                    <input asp-for="Name" name="name" id="name" type="text" required pattern="^(?=.*[A-Za-z])[A-Za-z ]{3,}$" title="Only characters are allowed (minimum 3 characters)">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="contact-email">
                                     <label for="email">Email <abbr title="required" class="required">*</abbr></label>
-                                    <input asp-for="Email" name="email" id="email" type="email">
+                                    <input asp-for="Email" name="email" id="email" type="email" required>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="contact-subject">
                                     <label for="email">Subject</label>
-                                    <input asp-for="Subject" name="subject" id="subject" type="text">
+                                    <input asp-for="Subject" name="subject" id="subject" type="text" required>
                                 </div>
                             </div>
                         </div>
@@ -66,8 +64,7 @@
                     </form>
                 </div>
 
-                <!-- Sidebar -->
-                <aside class="col-lg-4 sidebar sidebar--right">
+                @*<aside class="col-lg-4 sidebar sidebar--right">
 
                     <div class="widget widget_modal-input_form_widget">
                         <h4 class="widget-title">Subscribe for News</h4>
@@ -86,7 +83,6 @@
                         </form>
                     </div>
 
-                    <!-- Widget Socials -->
                     <div class="widget widget-socials">
                         <div class="socials justify-content-center">
                             <a class="social social-facebook" href="#" title="facebook" target="_blank" aria-label="facebook">
@@ -110,13 +106,13 @@
                                 <i class="ui-rss"></i>
                             </a>
                         </div>
-                    </div> <!-- end widget socials -->
-                </aside> <!-- end sidebar -->
+                    </div>
+                </aside>*@
 
-            </div> <!-- end row -->
+            </div>
 
-        </div> <!-- end container -->
-    </section> <!-- end main content -->
+        </div>
+    </section>
 
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.4286748536992!2d49.85137057594362!3d40.37719087144589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d079efb5163%3A0xc20aa51a5f0b5e01!2sCode%20Academy!5e0!3m2!1sen!2saz!4v1690051453789!5m2!1sen!2saz"
             width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy"

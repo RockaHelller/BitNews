@@ -341,6 +341,19 @@ namespace BitNews.Areas.Admin.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAll()
+        {
+            // Get all news items
+            var news = await _context.News.ToListAsync();
+
+
+            _context.News.RemoveRange(news);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

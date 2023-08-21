@@ -72,7 +72,7 @@ namespace BitNews.Controllers
                     CategoryName = item.Category.Name,
                     ViewCount = item.ViewCount,
                     View = datas,
-                    CreateDate = item.CreateDate.ToString("dd MMMM yyyy"),
+                    CreateDate = item.CreateDate.ToString("dddd, dd MMMM yyyy HH:mm:ss"),
                     Tag = string.Join(", ", item.NewsTags.Select(tag => tag.Tag.Name)),
                     CreatorName = item.CreatorName,
                 });
@@ -115,7 +115,7 @@ namespace BitNews.Controllers
                 Article = news.Article,
                 CategoryName = news.Category.Name,
                 Image = news.Images,
-                NewsTags = news.NewsTags, // Set the NewsTags collection in the NewsDetailVM model
+                NewsTags = news.NewsTags,
                 CreateDate = news.CreateDate.ToString("dddd, dd MMMM yyyy"),
                 View = datas,
                 News = datas.News,

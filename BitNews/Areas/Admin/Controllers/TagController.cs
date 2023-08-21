@@ -109,9 +109,6 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -123,6 +120,21 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAll()
+        {
+            var tags = await _context.Tags.ToListAsync();
+
+
+            _context.Tags.RemoveRange(tags);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }
