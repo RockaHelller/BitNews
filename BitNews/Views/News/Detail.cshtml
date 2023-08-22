@@ -86,35 +86,43 @@
 
                         <!-- Related Posts -->
                         <div class="related-posts">
-                            <h5 class="related-posts-title">You Might Like</h5>
-                            <div class="row">
-                                @foreach (var relatedPost in Model.News
-                                .Where(np => np.Id != Model.Id &&
-                                (np.NewsTags.Any(nt => Model.NewsTags.Any(relatedTag => relatedTag.TagId == nt.TagId)) ||
-                                np.Category.Name == Model.CategoryName))
-                                .Take(3))
-                                {
-                                    <div class="col-md-4">
-                                        <article class="entry">
-                                            <a href="categories.html" class="entry-meta-category">education</a>
-                                            <div class="entry-img-holder">
-                                                <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">
-                                                    <div class="thumb-container thumb-60">
-                                                        <img src="~/assets/img/News/@relatedPost.Images.FirstOrDefault().Image" class="entry-img " alt="" />
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="entry-body">
-                                                <div class="entry-header">
-                                                    <h2 class="entry-title">
-                                                        <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">@relatedPost.Title</a>
-                                                    </h2>
+                            @if (Model.News
+                            .Where(np => np.Id != Model.Id &&
+                            (np.NewsTags.Any(nt => Model.NewsTags.Any(relatedTag => relatedTag.TagId == nt.TagId)) ||
+                            np.Category.Name == Model.CategoryName))
+                            .Take(3).Any())
+                            {
+                                <h5 class="related-posts-title">You Might Like</h5>
+                                <div class="row">
+                                    @foreach (var relatedPost in Model.News
+                                   .Where(np => np.Id != Model.Id &&
+                                   (np.NewsTags.Any(nt => Model.NewsTags.Any(relatedTag => relatedTag.TagId == nt.TagId)) ||
+                                   np.Category.Name == Model.CategoryName))
+                                   .Take(3))
+                                    {
+                                        <div class="col-md-4">
+                                            <article class="entry">
+                                                <a href="categories.html" class="entry-meta-category">education</a>
+                                                <div class="entry-img-holder">
+                                                    <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">
+                                                        <div class="thumb-container thumb-60">
+                                                            <img src="~/assets/img/News/@relatedPost.Images.FirstOrDefault().Image" class="entry-img " alt="" />
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            </div>
-                                        </article>
-                                    </div>
-                                }
-                            </div>
+                                                <div class="entry-body">
+                                                    <div class="entry-header">
+                                                        <h2 class="entry-title">
+                                                            <a asp-controller="News" asp-action="Detail" asp-route-id="@relatedPost.Id">@relatedPost.Title</a>
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
                         </div> <!-- end related posts -->
 
                     </article> <!-- end standard post -->

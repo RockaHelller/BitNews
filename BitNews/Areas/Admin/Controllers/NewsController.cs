@@ -177,8 +177,6 @@ namespace BitNews.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -205,7 +203,6 @@ namespace BitNews.Areas.Admin.Controllers
                 Description = existNews.Description,
                 CategoryId = existNews.CategoryId,
                 Tags = tagCheckBoxes,
-
             };
 
             var categories = await _context.Categories.ToListAsync();

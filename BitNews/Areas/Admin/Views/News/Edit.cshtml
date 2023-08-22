@@ -5,26 +5,13 @@
     ViewData["Title"] = "Edit";
 }
 
-<style>
-
-</style>
 
 <div class="container my-5">
     <form method="post" asp-controller="News" asp-action="Edit" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
 
+
         <input type="file" asp-for="Image" class="form-control" multiple />
-        @*<span asp-validation-for="Image" class="text-danger d-block"></span>*@
-
-    @*    <select class="form-control" asp-for="CategoryId" id="category-select" required>
-            <option value="">Select Category</option>
-            @foreach (var category in ViewBag.categories)
-            {
-                <option value="@category.Value" selected="@((category.Value == Model.CategoryId.ToString()).ToString().ToLower())">@category.Text</option>
-            }
-
-        </select>
-        <span class="text-danger d-block" asp-validation-for="CategoryId"></span>*@
 
         <select asp-for="CategoryId" class="form-control" id="category-select" required>
             <option value="">Select Category</option>
