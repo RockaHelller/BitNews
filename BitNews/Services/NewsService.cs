@@ -18,15 +18,12 @@ namespace BitNews.Services
             _env = env;
         }
 
-
         public async Task<IEnumerable<News>> GetAllWithIncludesAsync()
         {
             return await _context.News.Include(m => m.NewsTags).
                 ThenInclude(m => m.Tag).Include(m => m.Category).
                 Include(m => m.Images).ToListAsync();
         }
-
-
 
         public async Task<News> GetByIdAsync(int? id) => await _context.News.Include(m => m.Images).
                                                                                             Include(m => m.NewsTags).
@@ -107,6 +104,16 @@ namespace BitNews.Services
             }
         }
 
+        public async Task ViewCountAsync(News news)
+        {
+            News oldNews = await _context.News.FirstOrDefaultAsync(m=>m.Id == news.Id);
+
+            oldNews.ViewCount = news.ViewCount + 1;
+
+            _context.Update(oldNews);
+
+            await _context.SaveChangesAsync();
+        }
 
 
         public async Task EditAsync(NewsEditVM model)
@@ -119,8 +126,6 @@ namespace BitNews.Services
 
             if (news == null)
             {
-                // Handle the case when the news with the specified ID is not found
-                // You can return an error or redirect to another action.
                 return;
             }
 
@@ -171,25 +176,6 @@ namespace BitNews.Services
             await _context.SaveChangesAsync();
         }
 
-
-        //public async Task<List<News>> GetSearchedBlogs(NewsVM model, string searchText = null)
-        //{
-        //    News news = await _context.News
-        //        .Include(n => n.NewsTags)
-        //        .Include(n => n.Images)
-        //        .FirstOrDefaultAsync(n => n.Id == model.Id);
-        //    List<News> searchProducts = new();
-
-        //    foreach (var item in news)
-        //    {
-        //        if (item.Name.ToLower().Contains(searchText))
-        //        {
-        //            searchProducts.Add(item);
-        //        }
-        //    }
-
-        //    return searchProducts;
-        //}
         public async Task<List<News>> GetSearchedNews(string searchText = null)
         {
             var searchedNews = new List<News>();
@@ -214,35 +200,5 @@ namespace BitNews.Services
 
             return searchedNews;
         }
-
-
-        //public async Task<List<News>> GetSearchedNews(string searchText = null)
-        //{
-        //    var searchedNews = new List<News>();
-
-        //    // Convert the search text to lowercase for case-insensitive comparison
-        //    var searchTextLower = searchText?.ToLower();
-
-        //    // Query the news articles that match the search criteria
-        //    var newsList = await _context.News
-        //        .Include(n => n.NewsTags)
-        //        .Include(n => n.Images)
-        //        .ToListAsync();
-
-        //    foreach (var news in newsList)
-        //    {
-        //        if (news.Title.ToLower().Contains(searchTextLower) ||
-        //            news.Article.ToLower().Contains(searchTextLower) ||
-        //            news.Description.ToLower().Contains(searchTextLower))
-        //        {
-        //            searchedNews.Add(news);
-        //        }
-        //    }
-
-        //    return searchedNews;
-        //}
-
-
-
     }
 }

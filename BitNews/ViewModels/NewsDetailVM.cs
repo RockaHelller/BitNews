@@ -14,6 +14,7 @@ namespace BitNews.ViewModels
         public ICollection<News> News { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public LayoutVM View { get; set; }
+        public int ViewCount { get; set; }
         public string CreateDate { get; set; }
         public string CreatorName { get; set; } // Add this property
         public string Name { get; set; }

@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\img\Category\" />
+	  
+	  <Content Update="appsettings.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>

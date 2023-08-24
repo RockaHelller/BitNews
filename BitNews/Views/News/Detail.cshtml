@@ -12,16 +12,11 @@
     }
 </style>
 
-
 <main class="main oh" id="main">
-
-    <!-- Content -->
     <section class="section-wrap main-content">
         <div class="container">
             <div class="row">
-                <!-- post content -->
                 <div class="col-lg-8 blog-content mb-30">
-                    <!-- standard post -->
                     <article class="entry">
                         <div class="single-post-entry-header entry-header">
                             <a href="#" class="entry-meta-category">Investing</a>
@@ -34,18 +29,14 @@
                             </h1>
 
                             <ul class="entry-meta">
-                                <li class="entry-meta-author">
-                                    <a href="#">
-                                        @*<img src="~/assets/img/blog/author.png" alt="">*@
-                                        @*<span>by</span>*@
-                                        @*            <span class="entry-meta-author-name">
-                                        @Model.CreatorName
-                                        </span>*@
-                                    </a>
-                                </li>
-                                <li class="entry-meta-date">
-                                    @Model.CreateDate
-
+                                <li class="entry-meta-date d-flex">
+                                    <div>
+                                        @Model.CreateDate
+                                    </div>
+                                    <div class="mx-3">
+                                        <i class="far fa-eye" style="color: #757575;"></i>
+                                        @Model.ViewCount
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -66,7 +57,6 @@
                                     }
                                 </p>
 
-                                <!-- tags -->
                                 <div class="entry-tags">
                                     @if (Model.NewsTags.Count != 0)
                                     {
@@ -78,13 +68,9 @@
                                         <a href="#" rel="tag">@item.Tag.Name</a>
                                     }
 
-                                </div> <!-- end tags -->
-
-                            </div> <!-- end entry article -->
-
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Related Posts -->
                         <div class="related-posts">
                             @if (Model.News
                             .Where(np => np.Id != Model.Id &&
@@ -122,11 +108,8 @@
                                     }
                                 </div>
                             }
-
-                        </div> <!-- end related posts -->
-
-                    </article> <!-- end standard post -->
-                    <!-- Comments -->
+                        </div>
+                    </article>
                     <div class="entry-comments mt-30">
                         <h5 class="entry-comments-title">@Model.Comments.Count() Comments</h5>
                         <ul class="comment-list">
@@ -153,9 +136,7 @@
                                 </li>
                             }
                         </ul>
-
-                    </div> <!-- end comments -->
-                    <!-- Comment Form -->
+                    </div>
                     <div id="respond" class="comment-respond">
                         <h5 class="comment-respond-title">Post a Comment</h5>
                         <span class="comment-respond-notice">
@@ -192,13 +173,9 @@
                                     </a>
                                 </p>
                             }
-
                         </form>
-
-                    </div> <!-- end comment form -->
-
-                </div> <!-- end post content -->
-                <!-- Sidebar -->
+                    </div>
+                </div>
                 <aside class="col-lg-4 sidebar sidebar--right widget-setting">
 
                     <script>!function () { var e = document.getElementsByTagName("script"), t = e[e.length - 1], n = document.createElement("script"); function r() { var e = crCryptocoinPriceWidget.init({ base: "USD,EUR,CNY,GBP", items: "BTC,ETH,LTC,DOGE,XRP,XMR,USDC,DASH", backgroundColor: "FFFFFF", streaming: "1", rounded: "1", boxShadow: "1", border: "1" }); t.parentNode.insertBefore(e, t) } n.src = "https://co-in.io/widget/pricelist.js?items=BTC%2CETH%2CXRP%2CUSDC%2CDOGE%2CLTC%2CDASH%2CXMR", n.async = !0, n.readyState ? n.onreadystatechange = function () { "loaded" != n.readyState && "complete" != n.readyState || (n.onreadystatechange = null, r()) } : n.onload = function () { r() }, t.parentNode.insertBefore(n, null) }();</script>
@@ -207,43 +184,23 @@
                         <h4 class="widget-title">Popular Posts</h4>
 
                         <ul class="widget-popular-posts-list">
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">Bitcoin Fees: Possible Solutions and Scenarios</a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">Bitcoin Fees: Possible Solutions and Scenarios</a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
-                            <li class="widget-popular-posts-item">
-                                <article>
-                                    <div class="widget-popular-posts-entry">
-                                        <a href="categories.html" class="entry-meta-category">mining</a>
-                                        <h3 class="widget-popular-posts-entry-title">
-                                            <a href="single-post.html">Bitcoin Fees: Possible Solutions and Scenarios</a>
-                                        </h3>
-                                    </div>
-                                </article>
-                            </li>
+                            @foreach (var item in Model.News.Take(3))
+                            {
+                                <li class="widget-popular-posts-item">
+                                    <article>
+                                        <div class="widget-popular-posts-entry">
+                                            <a asp-controller="News" asp-action="Index" class="entry-meta-category">@item.Category.Name</a>
+                                            <h3 class="widget-popular-posts-entry-title">
+                                                <a asp-controller="News" asp-action="Detail" asp-route-id="@item.Id">@item.Title</a>
+                                            </h3>
+                                        </div>
+                                    </article>
+                                </li>
+                            }
                         </ul>
-                    </div> <!-- end widget popular posts -->
-
-                </aside> <!-- end sidebar -->
-
-            </div> <!-- end row -->
-        </div> <!-- end container -->
-    </section> <!-- end main content -->
-
-</main> <!-- end main-wrapper -->
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>

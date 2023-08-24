@@ -19,8 +19,6 @@ namespace BitNews.Controllers
         private readonly AppDbContext _context;
         private readonly ILayoutService _layoutService;
 
-
-
         public NewsController(INewsService newsService,
                                      ISettingService settingService,
                                      ICategoryService categoryService,
@@ -121,12 +119,15 @@ namespace BitNews.Controllers
                 News = datas.News,
                 CreatorName = news.CreatorName,
                 Comments = news.Comments,
+                ViewCount = news.ViewCount + 1,
             };
+
+            await _newsService.ViewCountAsync(news);
+
 
             return View(model);
         }
 
-        //int newsId, string text,
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostComment(int id, ViewModels.NewsDetailVM model)

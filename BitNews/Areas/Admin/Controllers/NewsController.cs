@@ -1,5 +1,4 @@
-﻿
-using BitNews.Areas.Admin.ViewModels.News;
+﻿using BitNews.Areas.Admin.ViewModels.News;
 using BitNews.Data;
 using BitNews.Helpers;
 using BitNews.Models;

@@ -31,7 +31,7 @@ namespace BitNews.Controllers
             IEnumerable<Category> categories = await _categoryService.GetAll();
             var settings = await _context.Settings.ToListAsync();
 
-
+            news = news.OrderByDescending(n => n.ViewCount);
 
             HomeVM model = new HomeVM
             {
@@ -43,9 +43,5 @@ namespace BitNews.Controllers
 
             return View(model); // Pass the single HomeVM object to the view
         }
-
-
-
-
     }
 }

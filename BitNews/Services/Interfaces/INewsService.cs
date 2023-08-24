@@ -11,6 +11,7 @@ namespace BitNews.Services.Interfaces
         NewsDetailVM GetMappedData(News news);
         Task CreateAsync(NewsCreateVM model);
         Task EditAsync(NewsEditVM model);
+        Task ViewCountAsync(News news);
         Task<List<News>> GetSearchedNews(string searchText = null);
 
 

@@ -1,6 +1,4 @@
-﻿
-
-using BitNews.Data;
+﻿using BitNews.Data;
 using BitNews.Services.Interfaces;
 using BitNews.ViewModels;
 using Microsoft.AspNetCore.Mvc;
