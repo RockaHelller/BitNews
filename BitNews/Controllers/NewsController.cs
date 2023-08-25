@@ -44,6 +44,9 @@ namespace BitNews.Controllers
                 news = await _newsService.GetAllWithIncludesAsync();
             }
 
+
+            news = news.OrderByDescending(item => item.Id);
+
             int totalItems = news.Count();
             int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 

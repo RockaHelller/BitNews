@@ -9,7 +9,7 @@
 </style>
 
 <div class="row news-container d-flex">
-    @foreach (var item in Model.Datas.OrderByDescending(m => m.Id))
+    @foreach (var item in Model.Datas)
     {
         <div class="col-lg-4 col-md-6 filter-category-news">
             <article class="entry" data-tag="@item.CategoryName">
@@ -31,14 +31,7 @@
                                     @item.CreatorName
                                 </a>
                             </li>
-                            <li class="entry-meta-date">
-                                <script>
-                                    var createDate = new Date('@item.CreateDate');
-                                    var options = { day: 'numeric', month: 'long' };
-                                    var formattedDate = createDate.toLocaleDateString('en-US', options);
-                                    document.write(formattedDate);
-                                </script>
-                            </li>
+                            <li class="entry-meta-date">@item.CreateDate</li>
                         </ul>
                     </div>
                     <div class="entry-excerpt">

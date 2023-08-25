@@ -107,7 +107,6 @@
 
 </main>
 
-
 @section Scripts {
     <script>
         $(document).ready(function () {
@@ -131,16 +130,27 @@
             function sortNews() {
                 var selectedOption = $('#sortSelect').val();
 
-                if (selectedOption === 'oldest') {
-                    $('.filter-category-news').sort(function (a, b) {
-                        return $(a).find('.entry-meta-date').text().localeCompare($(b).find('.entry-meta-date').text());
-                    }).appendTo('.news-container');
-                } else if (selectedOption === 'latest') {
-                    $('.filter-category-news').sort(function (a, b) {
-                        return $(b).find('.entry-meta-date').text().localeCompare($(a).find('.entry-meta-date').text());
-                    }).appendTo('.news-container');
+                function getPublicationDate(element) {
+                    return $(element).find('.entry-meta-date').text();
                 }
+
+                function comparePublicationDates(a, b) {
+                    var dateA = getPublicationDate(a);
+                    var dateB = getPublicationDate(b);
+
+                    if (selectedOption === 'oldest') {
+                        return new Date(dateA) - new Date(dateB);
+                    } else if (selectedOption === 'latest') {
+                        return new Date(dateB) - new Date(dateA);
+                    }
+                }
+
+                var articles = $('.filter-category-news').toArray();
+                articles.sort(comparePublicationDates);
+
+                $('.news-container').empty().append(articles);
             }
+
 
             $('#sortSelect').on('change', sortNews);
 
@@ -154,5 +164,4 @@
             document.getElementById('pageSizeForm').submit();
         }
     </script>
-
 }
