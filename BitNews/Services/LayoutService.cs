@@ -42,9 +42,6 @@ namespace BitNews.Services
                 UserFullName = user?.FullName ?? "Guest User", // Populate with "Guest User" when not logged in
                 UserEmail = user?.Email,
                 News = news.ToList(),
-                //Image = user?.Image,
-                UserPhone = user?.PhoneNumber,
-                //UserAddress = user?.UserAddress,
             };
                     
             return layoutVM;

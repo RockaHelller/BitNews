@@ -7,9 +7,6 @@
     var distinctCategories = Model.Datas.Select(item => item.CategoryName).Distinct();
 }
 
-
-
-
 <main class="main oh" id="main">
 
     <section class="section-wrap main-content">
@@ -45,12 +42,7 @@
                             <div class="shop-widget w-80">
                                 <div class="container">
                                     <form>
-                                        @*  @if (!string.IsNullOrEmpty(Model.Datas.FirstOrDefault()?.CategoryName))
-                                    {
-                                    <h6 class="shop-widget-title my-2">Filter by Category</h6>
-                                    }*@
                                         <h6 class="shop-widget-title my-2">Filter by Category</h6>
-
 
                                         <ul class="shop-widget-list">
                                             @foreach (var categoryName in distinctCategories)
@@ -63,20 +55,6 @@
                                                 </li>
                                             }
                                         </ul>
-
-
-                                        @*               <h6 class="shop-widget-title my-2">Filter by Tag</h6>
-                                    <ul class="shop-widget-list">
-                                    @foreach (var tagName in distinctTags)
-                                    {
-                                    <li class="my-2">
-                                    <div class="shop-widget-content">
-                                    <input type="checkbox" id="@($"tag{tagName}")">
-                                    <label for="@($"tag{tagName}")">@tagName</label>
-                                    </div>
-                                    </li>
-                                    }
-                                    </ul>*@
                                     </form>
                                 </div>
 
@@ -89,16 +67,6 @@
                         <div class="row justify-content-center">
                                 <partial name="_ProductsPartial" />
                         </div>
-                        @*            @if (Model != null && Model.Datas.Count > 0)
-                    {
-                    <nav class="show-more">
-                    <div class="show-more-link text-center">
-                    <a href="#" class="btn btn-lg btn-color">
-                    <span>more news</span>
-                    </a>
-                    </div>
-                    </nav>
-                    }*@
 
                         <div class="row">
                             <div class="col-lg-12">
@@ -130,8 +98,8 @@
 
             }
        
-        </div> <!-- end container -->
-    </section> <!-- end main content -->
+        </div>
+    </section>
 
     <div id="back-to-top">
         <a href="#top" aria-label="Go to top"><i class="ui-arrow-up"></i></a>
@@ -143,7 +111,6 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Function to handle filtering based on selected checkboxes
             function filterNewsByTag() {
                 var selectedTags = [];
                 $('input[type="checkbox"]:checked').each(function () {
@@ -151,25 +118,19 @@
                 });
 
                 if (selectedTags.length === 0) {
-                    // If no checkboxes are selected, show all news articles
                     $('.filter-category-news').show();
                 } else {
-                    // Hide all news articles
                     $('.filter-category-news').hide();
 
-                    // Show only news articles with selected tags
                     selectedTags.forEach(function (tagId) {
-                        // Show articles with matching data-tag attribute
                         $('.entry[data-tag="' + tagId + '"]').closest('.filter-category-news').show();
                     });
                 }
             }
 
-            // Function to handle sorting based on selected option
             function sortNews() {
                 var selectedOption = $('#sortSelect').val();
 
-                // Sort the news articles based on the selected option
                 if (selectedOption === 'oldest') {
                     $('.filter-category-news').sort(function (a, b) {
                         return $(a).find('.entry-meta-date').text().localeCompare($(b).find('.entry-meta-date').text());
@@ -181,13 +142,10 @@
                 }
             }
 
-            // Handle select change event
             $('#sortSelect').on('change', sortNews);
 
-            // Handle checkbox change event
             $('input[type="checkbox"]').on('change', filterNewsByTag);
 
-            // Initially, trigger the filtering and sorting to show the relevant news articles
             filterNewsByTag();
             sortNews();
         });

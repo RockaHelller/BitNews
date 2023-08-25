@@ -6,10 +6,8 @@
 }
 
 <style>
-    /* Custom CSS */
     .custom-textarea {
         border-color: #c6c2c2;
-        /*border: #c6c2c2 ;*/
         outline: none !important;
     }
 </style>
@@ -29,7 +27,6 @@
 
     <div class="card mt-3">
         <div class="card-body">
-            <!-- Separate form for sending email -->
             @using (Html.BeginForm("Detail", "Contact", new { id = Model.Id }, FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id)

@@ -10,19 +10,16 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class TagController : Controller
     {
         private readonly AppDbContext _context;
         private readonly ITagService _tagService;
-        private readonly IWebHostEnvironment _env;
 
-
-        public TagController(AppDbContext context, IWebHostEnvironment env, ITagService tagService)
+        public TagController(AppDbContext context, ITagService tagService)
         {
             _context = context;
             _tagService = tagService;
-            _env = env;
         }
 
         public async Task<IActionResult> Index()
@@ -134,7 +131,5 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

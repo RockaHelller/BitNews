@@ -114,12 +114,14 @@ else if ((ViewBag.tag == null || ((List<SelectListItem>)ViewBag.tag).Count == 0)
         }
         else
         {
+            @if (User.IsInRole("SuperAdmin"))
+            {
             <div class="d-flex justify-content-between">
                 <div class="create-btn ">
                     <a asp-controller="News" asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
                 </div>
             </div>
-
+            }
         }
     </div>
 }
@@ -163,16 +165,18 @@ else
         else
         {
             <div class="d-flex justify-content-between">
-                <div class="create-btn ">
-                    <a asp-controller="News" asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
-                </div>
-                <div class="delete-btn ">
-                    <form method="post" asp-action="DeleteAll" onsubmit="return confirm('Are you sure you want to delete all news? This action cannot be undone.');">
-                        <button type="submit" class="btn btn-danger btn-rounded btn-fw">Delete All</button>
-                    </form>
-                </div>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <div class="create-btn ">
+                        <a asp-controller="News" asp-action="Create" class="btn btn-success btn-rounded btn-fw">Create</a>
+                    </div>
+                    <div class="delete-btn ">
+                        <form method="post" asp-action="DeleteAll" onsubmit="return confirm('Are you sure you want to delete all news? This action cannot be undone.');">
+                            <button type="submit" class="btn btn-danger btn-rounded btn-fw">Delete All</button>
+                        </form>
+                    </div>
+                }
             </div>
-
         }
 
         <div class="table-responsive">
@@ -218,10 +222,13 @@ else
                                         <a class="btn btn-warning btn-rounded btn-fw action-btn"
                                asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                     }
-                                    <form method="post" asp-action="Delete" asp-route-id="@item.Id"
-                                          onsubmit="return confirm('Are you sure you want to delete this News?')">
+                                    @if (User.IsInRole("SuperAdmin"))
+                                    {
+                                        <form method="post" asp-action="Delete" asp-route-id="@item.Id"
+            onsubmit="return confirm('Are you sure you want to delete this News?')">
                                         <button type="submit" class="btn btn-danger btn-rounded btn-fw action-btn">Delete</button>
                                     </form>
+                                    }
                                 </div>
                             </td>
                         </tr>
@@ -251,7 +258,3 @@ else
         </div>
     </div>
 }
-
-
-
-

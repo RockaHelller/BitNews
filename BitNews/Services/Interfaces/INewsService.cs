@@ -13,7 +13,5 @@ namespace BitNews.Services.Interfaces
         Task EditAsync(NewsEditVM model);
         Task ViewCountAsync(News news);
         Task<List<News>> GetSearchedNews(string searchText = null);
-
-
     }
 }

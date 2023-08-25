@@ -12,30 +12,22 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class NewsController : Controller
     {
         private readonly INewsService _newsService;
-        private readonly ISettingService _settingService;
         private readonly ICategoryService _categoryService;
         private readonly ITagService _tagsService;
         private readonly AppDbContext _context;
-        private readonly IWebHostEnvironment _env;
-
-
 
         public NewsController(INewsService newsService,
-                                     ISettingService settingService,
                                      ICategoryService categoryService,
                                      AppDbContext context,
-                                     IWebHostEnvironment env,
                                      ITagService tagsService)
         {
             _newsService = newsService;
-            _settingService = settingService;
             _categoryService = categoryService;
             _context = context;
-            _env = env;
             _tagsService = tagsService;
         }
 
@@ -81,13 +73,11 @@ namespace BitNews.Areas.Admin.Controllers
 
             var paginatedModel = new Paginate<NewsVM>(model, page, totalPages);
 
-            // Pass the categories data to the view directly using the model
             var categories = await _categoryService.GetAll();
             var tags = await _tagsService.GetAll();
 
             ViewBag.PaginatedModel = paginatedModel;
 
-            // Convert the list of Category objects to a list of SelectListItem
             var categorySelectListItems = categories.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
@@ -106,9 +96,6 @@ namespace BitNews.Areas.Admin.Controllers
 
             return View(paginatedModel);
         }
-
-
-
 
         [HttpGet]
         [Authorize(Roles = "SuperAdmin")]
@@ -144,7 +131,7 @@ namespace BitNews.Areas.Admin.Controllers
         public async Task<IActionResult> Create(NewsCreateVM model)
         {
             await GetAllSelectOptions();
-            string creatorName = $"{User.Identity.Name}"; // Modify this based on your authentication setup
+            string creatorName = $"{User.Identity.Name}";
             model.CreatorName = creatorName;
 
             if (!ModelState.IsValid)
@@ -284,7 +271,6 @@ namespace BitNews.Areas.Admin.Controllers
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
 
-            // Redirect back to the comments page for the specific news
             return RedirectToAction("Comments", new { id = newsId });
         }
 
@@ -320,16 +306,6 @@ namespace BitNews.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            // Delete the associated image file if it exists
-            //if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
-            //{
-            //    string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
-            //    if (System.IO.File.Exists(imagePath))
-            //    {
-            //        System.IO.File.Delete(imagePath);
-            //    }
-            //}
-
             _context.News.Remove(news);
             await _context.SaveChangesAsync();
 
@@ -341,9 +317,7 @@ namespace BitNews.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAll()
         {
-            // Get all news items
             var news = await _context.News.ToListAsync();
-
 
             _context.News.RemoveRange(news);
             await _context.SaveChangesAsync();
@@ -358,7 +332,6 @@ namespace BitNews.Areas.Admin.Controllers
             return file.ContentType.StartsWith("image/");
         }
 
-
         private bool IsCheckedTag(int? id, Tag item)
         {
             if (item.NewsTag != null)
@@ -368,20 +341,15 @@ namespace BitNews.Areas.Admin.Controllers
                     if (tag.NewsId == id)
                     {
                         return true;
-
                     }
                     else
                     {
                         return false;
                     }
-
                 }
             }
 
             return false;
-
         }
-
-
     }
 }

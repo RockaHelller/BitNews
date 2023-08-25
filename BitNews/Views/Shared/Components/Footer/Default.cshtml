@@ -13,19 +13,16 @@
                             need to know about ICOs, education, reviews, mining, and more.
                         </p>
                         <div class="socials">
-                            <a href="#" class="social social-facebook" aria-label="facebook">
+                            <a href="@Model.SettingDatas["Facebook"]" class="social social-facebook" aria-label="facebook">
                                 <i class="ui-facebook"></i>
                             </a>
-                            <a href="#" class="social social-twitter" aria-label="twitter">
+                            <a href="@Model.SettingDatas["Twitter"]" class="social social-twitter" aria-label="twitter">
                                 <i class="ui-twitter"></i>
                             </a>
-                            <a href="#" class="social social-google-plus" aria-label="google+">
-                                <i class="ui-google"></i>
-                            </a>
-                            <a href="#" class="social social-youtube" aria-label="youtube">
+                            <a href="@Model.SettingDatas["Youtube"]" class="social social-youtube" aria-label="youtube">
                                 <i class="ui-youtube"></i>
                             </a>
-                            <a href="#" class="social social-instagram" aria-label="instagram">
+                            <a href="@Model.SettingDatas["Instagram"]" class="social social-instagram" aria-label="instagram">
                                 <i class="ui-instagram"></i>
                             </a>
                         </div>
@@ -33,20 +30,19 @@
                 </div>
             </div>
         </div>
-    </div> <!-- end container -->
+    </div>
 
     <div class="footer-bottom">
         <div class="container text-center">
             <span class="copyright">
                 @Html.Raw(@Model.SettingDatas["CopyRight"])
-                @*&copy; 2023 BitNews | Made by*@
                 <a href="@Model.SettingDatas["CreatorLinkedin"]">
                     @Html.Raw(@Model.SettingDatas["Creator"])
                 </a>
             </span>
         </div>
-    </div> <!-- end bottom footer -->
-</footer> <!-- end footer -->
+    </div>
+</footer>
 
 <div id="back-to-top">
     <a href="#top" aria-label="Go to top"><i class="ui-arrow-up"></i></a>

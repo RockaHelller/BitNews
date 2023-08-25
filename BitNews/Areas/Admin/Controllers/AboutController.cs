@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class AboutController : Controller
     {
         private readonly AppDbContext _context;
@@ -26,11 +26,6 @@ namespace BitNews.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var about = await _context.Abouts.FirstOrDefaultAsync();
-            if (about == null)
-            {
-                // Handle the case where no About data exists
-                // For example, you could create a new About entry or return a specific view
-            }
 
             var model = new AboutVM
             {
@@ -94,7 +89,6 @@ namespace BitNews.Areas.Admin.Controllers
                 existAbout.WhatWeDo = request.WhatWeDo;
             }
 
-            // Get the old image file path from the existing category
             var oldImagePath = Path.Combine("wwwroot/assets/img/About", existAbout.Image);
 
             if (request.NewImage != null)
@@ -119,12 +113,6 @@ namespace BitNews.Areas.Admin.Controllers
                     await request.NewImage.CopyToAsync(fileStream);
                 }
 
-                // If a new image is provided, delete the old image from the folder
-                //if (System.IO.File.Exists(oldImagePath))
-                //{
-                //    System.IO.File.Delete(oldImagePath);
-                //}
-
                 existAbout.Image = imageName;
             }
 
@@ -133,10 +121,5 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
     }
 }

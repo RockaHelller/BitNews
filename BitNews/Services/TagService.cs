@@ -8,12 +8,10 @@ namespace BitNews.Services
     public class TagService : ITagService
     {
         private readonly AppDbContext _context;
-        private readonly IWebHostEnvironment _env;
 
-        public TagService(AppDbContext context, IWebHostEnvironment env)
+        public TagService(AppDbContext context)
         {
             _context = context;
-            _env = env;
         }
 
         public async Task<List<Tag>> GetAll()

@@ -8,12 +8,10 @@ namespace BitNews.Controllers
     public class AboutController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly ILayoutService _layoutService;
 
-        public AboutController(AppDbContext context, ILayoutService layoutService)
+        public AboutController(AppDbContext context)
         {
             _context = context;
-            _layoutService = layoutService;
         }
         public IActionResult Index()
         {

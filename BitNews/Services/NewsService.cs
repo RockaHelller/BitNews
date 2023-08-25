@@ -54,6 +54,7 @@ namespace BitNews.Services
                 NewsTags = news.NewsTags,
                 CreateDate = news.CreateDate.ToString("dddd, dd MMMM yyyy"),
                 CreatorName = news.CreatorName,
+                ViewCount = news.ViewCount 
             };
             return newsDetail;
         }
@@ -118,7 +119,6 @@ namespace BitNews.Services
 
         public async Task EditAsync(NewsEditVM model)
         {
-            // Retrieve the news with its related tags and images
             News news = await _context.News
                 .Include(n => n.NewsTags)
                 .Include(n => n.Images)
@@ -131,34 +131,25 @@ namespace BitNews.Services
 
             if (model.Image != null)
             {
-                // Delete the existing image file if it exists
                 if (!string.IsNullOrEmpty(news.Images?.FirstOrDefault()?.Image))
                 {
                     string imagePath = Path.Combine(_env.WebRootPath, "assets/img/News", news.Images.FirstOrDefault().Image);
-                    //if (System.IO.File.Exists(imagePath))
-                    //{
-                    //    System.IO.File.Delete(imagePath);
-                    //}
                 }
 
-                // Save the new image file
                 string fileName = Guid.NewGuid().ToString() + "_" + model.Image.FileName;
                 await model.Image.SaveFileAsync(fileName, _env.WebRootPath, "assets/img/News");
 
-                // Update the news image
                 news.Images = new List<NewsImage>
         {
             new NewsImage { Image = fileName, IsMain = true }
         };
             }
 
-            // Update other news properties
             news.Title = model.Title;
             news.Article = model.Article;
             news.Description = model.Description;
             news.CategoryId = model.CategoryId;
 
-            // Update the NewsTags
             news.NewsTags.Clear();
             foreach (var item in model.Tags)
             {
@@ -180,10 +171,9 @@ namespace BitNews.Services
         {
             var searchedNews = new List<News>();
 
-            // Query the news articles that match the search criteria
             var newsList = await _context.News
                 .Include(n => n.NewsTags)
-                .ThenInclude(nt => nt.Tag) // Include the Tag entity
+                .ThenInclude(nt => nt.Tag)
                 .Include(n => n.Images)
                 .ToListAsync();
 

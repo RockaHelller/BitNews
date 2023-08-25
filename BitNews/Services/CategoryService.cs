@@ -8,12 +8,10 @@ namespace BitNews.Services
     public class CategoryService : ICategoryService
     {
         private readonly AppDbContext _context;
-        private readonly IWebHostEnvironment _env;
 
-        public CategoryService(AppDbContext context, IWebHostEnvironment env)
+        public CategoryService(AppDbContext context)
         {
             _context = context;
-            _env = env;
         }
 
         public async Task<List<Category>> GetAll()

@@ -41,7 +41,7 @@ namespace BitNews.Controllers
                 SettingDatas = settings.AsEnumerable().ToDictionary(m => m.Key, m => m.Value),
             };
 
-            return View(model); // Pass the single HomeVM object to the view
+            return View(model);
         }
     }
 }

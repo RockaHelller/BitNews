@@ -50,17 +50,10 @@ namespace BitNews.Services
 
                 if (slider == null)
                 {
-                    // Handle the case where the slider with the given ID doesn't exist
-                    // or return an appropriate response
                     return;
                 }
 
                 string path = Path.Combine(_env.WebRootPath, "assets", "img", "Slider", slider.Image);
-
-                //if (File.Exists(path))
-                //{
-                //    File.Delete(path);
-                //}
 
                 _context.Sliders.Remove(slider);
 
@@ -90,14 +83,11 @@ namespace BitNews.Services
 
             if (slider == null)
             {
-                // Handle the case where the slider with the given ID doesn't exist
-                // or return an appropriate response
                 return;
             }
 
             if (model.NewImage != null)
             {
-                // Delete the old image file if it exists
                 if (!string.IsNullOrEmpty(slider.Image))
                 {
                     string oldImagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Slider", slider.Image);

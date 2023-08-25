@@ -5,7 +5,7 @@
 }
 
 <style>
-    .page-subtitle{
+    .page-subtitle {
         max-width: none;
     }
 </style>
@@ -48,67 +48,11 @@
                             <textarea asp-for="Message" id="message" name="message" rows="7" required="required"></textarea>
                         </div>
 
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <input type="submit" class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message">
-                            <div id="msg" class="message"></div>
-                        }
-                        else
-                        {
-                            <a asp-controller="Account" asp-action="SignIn">
-                                <input class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message">
-                                <div id="msg" class="message"></div>
-                            </a>
-                            
-                        }
+                        <input type="submit" class="btn btn-lg btn-color btn-button" value="Send Message" id="submit-message">
+                        <div id="msg" class="message"></div>
+
                     </form>
                 </div>
-
-                @*<aside class="col-lg-4 sidebar sidebar--right">
-
-                    <div class="widget widget_modal-input_form_widget">
-                        <h4 class="widget-title">Subscribe for News</h4>
-                        <form class="modal-input-form" method="post">
-                            <div class="modal-input-form-fields">
-                                <div class="form-group">
-                                    <i class="ui-user"></i>
-                                    <input type="text" name="NAME" placeholder="Your name" required="">
-                                </div>
-                                <div class="form-group">
-                                    <i class="ui-email"></i>
-                                    <input type="email" name="EMAIL" placeholder="Your email" required="">
-                                </div>
-                                <input type="submit" class="btn btn-md btn-color" value="Subscribe">
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="widget widget-socials">
-                        <div class="socials justify-content-center">
-                            <a class="social social-facebook" href="#" title="facebook" target="_blank" aria-label="facebook">
-                                <i class="ui-facebook"></i>
-                            </a>
-                            <a class="social social-twitter" href="#" title="twitter" target="_blank" aria-label="twitter">
-                                <i class="ui-twitter"></i>
-                            </a>
-
-                            <a class="social social-google-plus" href="#" title="google" target="_blank" aria-label="google">
-                                <i class="ui-google"></i>
-                            </a>
-
-                            <a class="social social-instagram" href="#" title="instagram" target="_blank" aria-label="instagram">
-                                <i class="ui-instagram"></i>
-                            </a>
-                            <a class="social social-youtube" href="#" title="youtube" target="_blank" aria-label="youtube">
-                                <i class="ui-youtube"></i>
-                            </a>
-                            <a class="social social-rss" href="#" title="rss" target="_blank" aria-label="rss">
-                                <i class="ui-rss"></i>
-                            </a>
-                        </div>
-                    </div>
-                </aside>*@
-
             </div>
 
         </div>

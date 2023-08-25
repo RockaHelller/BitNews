@@ -10,27 +10,14 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class SettingController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly INewsService _newsService;
-        private readonly ISettingService _settingService;
 
-
-        public SettingController(AppDbContext context,
-                             IHttpContextAccessor httpContextAccessor,
-                             UserManager<AppUser> userManager,
-                             INewsService newsService,
-                             ISettingService settingService)
+        public SettingController(AppDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
-            _userManager = userManager;
-            _newsService = newsService;
-            _settingService = settingService;
         }
 
 
@@ -90,12 +77,10 @@ namespace BitNews.Areas.Admin.Controllers
         {
             if (id is null) return BadRequest();
             var existSetting = await _context.Settings.FirstOrDefaultAsync(m => m.Id == id.Value);
-            //var existSetting = await _context.Settings.ToListAsync();
             if (existSetting is null) return NotFound();
 
             SettingEditVM model = new()
             {
-                //Id = existSetting.Id,
                 Key = existSetting.Key,
                 Value = existSetting.Value
             };
@@ -145,9 +130,5 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
     }
 }

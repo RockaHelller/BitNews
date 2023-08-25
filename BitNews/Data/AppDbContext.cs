@@ -10,7 +10,6 @@ namespace BitNews.Data
         {
 
         }
-
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<News> News { get; set; }
@@ -31,15 +30,6 @@ namespace BitNews.Data
             modelBuilder.Entity<Tag>().HasQueryFilter(m => !m.SoftDelete);
             modelBuilder.Entity<News>().HasQueryFilter(m => !m.SoftDelete);
             modelBuilder.Entity<NewsImage>().HasQueryFilter(m => !m.SoftDelete);
-
-
-
         }
-
-
-
-
-
-
     }
 }

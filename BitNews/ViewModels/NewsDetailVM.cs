@@ -16,7 +16,7 @@ namespace BitNews.ViewModels
         public LayoutVM View { get; set; }
         public int ViewCount { get; set; }
         public string CreateDate { get; set; }
-        public string CreatorName { get; set; } // Add this property
+        public string CreatorName { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
 

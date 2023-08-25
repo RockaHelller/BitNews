@@ -14,12 +14,10 @@ namespace BitNews.Areas.Admin.Controllers
     [Authorize(Roles = "SuperAdmin,Admin")]
     public class SliderController : Controller
     {
-        private readonly IWebHostEnvironment _env;
         private readonly ISliderService _sliderService;
 
-        public SliderController(IWebHostEnvironment env, ISliderService sliderService)
+        public SliderController(ISliderService sliderService)
         {
-            _env = env;
             _sliderService = sliderService;
         }
 

@@ -16,7 +16,7 @@ namespace BitNews.Controllers
         {
             _context = context;
             _layoutService = layoutService;
-        }
+        } 
 
         public async Task<IActionResult> Index()
         {
@@ -27,24 +27,17 @@ namespace BitNews.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateContact(Contact model)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (ModelState.IsValid)
+                if (User.Identity.IsAuthenticated)
                 {
-                    model.CreatorName = User.Identity.Name; // Set the CreatorName from authenticated user
-
-                    _context.Contacts.Add(model);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Index");
+                    model.CreatorName = User.Identity.Name;
                 }
-            }
-            else
-            {
-                // Handle the case where the user is not authenticated (e.g., show an error message)
-                ModelState.AddModelError("", "You must be logged in to submit a contact.");
-            }
-
-            return View("Index", model); // Return to the contact form with errors
+                else
+                {
+                    model.CreatorName = "Guest";
+                }
+                _context.Contacts.Add(model);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
         }
 
     }

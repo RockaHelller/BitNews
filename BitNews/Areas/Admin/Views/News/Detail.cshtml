@@ -7,22 +7,17 @@
     table, td, td {
         border: 1px solid;
         text-align: center;
-        /*width: 60%;*/
-    }
-
-    tr {
-        /*height: 40px*/
     }
 </style>
 
 <div class="container">
-    <div class="images my-2" @*style="width: 50% !important;"*@>
+    <div class="images my-2"
         @foreach (var item in Model.Image)
         {
             <img src="~/assets/img/News/@item.Image" style="max-height: 300px;" />
         }
     </div>
-    <div @*class="detail"*@>
+    <div>
         <table>
             <tbody>
                 <tr>
@@ -55,19 +50,15 @@
                     <td>@Model.CreateDate</td>
                 </tr>
                 <tr>
+                    <td style="background-color: #f5f5f5;">ViewCount</td>
+                    <td>@Model.ViewCount</td>
+                </tr>
+                <tr>
                     <td style="background-color: #f5f5f5;">Creator</td>
                     <td>@Model.CreatorName</td>
                 </tr>
             </tbody>
-
-
         </table>
     </div>
     <a asp-action="Index" class="btn btn-primary btn-rounded btn-fw mt-3">Back</a>
-
-
-
-
-
 </div>
-

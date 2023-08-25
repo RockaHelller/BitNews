@@ -19,19 +19,15 @@ namespace BitNews.Services
 
         public void Send(string to, string subject, string html, string from = null)
         {
-            // create message
             var email = new MimeMessage();
 
-            // If 'from' parameter is not provided or is empty, use the default 'FromAddress' from the settings
             string fromAddress = !string.IsNullOrEmpty(from) ? from : _emailSettings.FromAddress;
 
-            // Ensure 'fromAddress' is not null or empty before adding to email.From
             if (!string.IsNullOrEmpty(fromAddress))
             {
                 email.From.Add(MailboxAddress.Parse(fromAddress));
             }
 
-            // Ensure 'to' address is not null or empty before adding to email.To
             if (!string.IsNullOrEmpty(to))
             {
                 email.To.Add(MailboxAddress.Parse(to));
@@ -40,7 +36,6 @@ namespace BitNews.Services
             email.Subject = subject;
             email.Body = new TextPart(TextFormat.Html) { Text = html };
 
-            // send email
             using var smtp = new SmtpClient();
             smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
             smtp.Connect(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);

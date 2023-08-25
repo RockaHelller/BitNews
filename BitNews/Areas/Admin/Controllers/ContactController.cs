@@ -13,25 +13,21 @@ using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class ContactController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly ILayoutService _layoutService;
-        private readonly IEmailService _emailService;
 
 
-        public ContactController(AppDbContext context, ILayoutService layoutService, IEmailService emailService)
+        public ContactController(AppDbContext context)
         {
             _context = context;
-            _layoutService = layoutService;
-            _emailService = emailService;
         }
 
 
         public async Task<IActionResult> Index()
         {
-            List<Contact> contacts = await _context.Contacts.ToListAsync(); // Fetch all contacts
+            List<Contact> contacts = await _context.Contacts.ToListAsync();
 
             return View(contacts);
         }
@@ -88,12 +84,7 @@ namespace BitNews.Areas.Admin.Controllers
 
             smtp.Send(mail);
 
-            //return RedirectToAction("Detail", new { id = id });
             return RedirectToAction(nameof(Index));
-            //else
-            //{
-            //    return View(model);
-            //}
         }
 
         [HttpPost]

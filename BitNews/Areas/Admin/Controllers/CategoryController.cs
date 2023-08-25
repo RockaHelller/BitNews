@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BitNews.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -90,10 +90,8 @@ namespace BitNews.Areas.Admin.Controllers
             {
                 var image = request.Image;
 
-                // Generate a unique image name or use a naming convention that suits your requirements
                 imageName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
 
-                // Save the image to a specified location or a database, depending on your implementation
                 var imagePath = Path.Combine("wwwroot/assets/img/Category", imageName);
                 using (var fileStream = new FileStream(imagePath, FileMode.Create))
                 {
@@ -147,7 +145,6 @@ namespace BitNews.Areas.Admin.Controllers
                 existCategory.Name = request.Name;
             }
 
-            // Get the old image file path from the existing category
             var oldImagePath = Path.Combine("wwwroot/assets/img/Category", existCategory.Image);
 
             if (request.NewImage != null)
@@ -172,12 +169,6 @@ namespace BitNews.Areas.Admin.Controllers
                     await request.NewImage.CopyToAsync(fileStream);
                 }
 
-                // If a new image is provided, delete the old image from the folder
-                //if (System.IO.File.Exists(oldImagePath))
-                //{
-                //    System.IO.File.Delete(oldImagePath);
-                //}
-
                 existCategory.Image = imageName;
             }
 
@@ -197,11 +188,6 @@ namespace BitNews.Areas.Admin.Controllers
             if (!string.IsNullOrEmpty(existCategory.Image))
             {
                 string imagePath = Path.Combine(_env.WebRootPath, "assets", "img", "Category", existCategory.Image);
-
-                //if (System.IO.File.Exists(imagePath))
-                //{
-                //    System.IO.File.Delete(imagePath);
-                //}
             }
 
             _context.Remove(existCategory);
@@ -223,7 +209,5 @@ namespace BitNews.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

@@ -14,19 +14,16 @@ namespace BitNews.Controllers
     public class NewsController : Controller
     {
         private readonly INewsService _newsService;
-        private readonly ISettingService _settingService;
         private readonly ICategoryService _categoryService;
         private readonly AppDbContext _context;
         private readonly ILayoutService _layoutService;
 
         public NewsController(INewsService newsService,
-                                     ISettingService settingService,
                                      ICategoryService categoryService,
                                      AppDbContext context,
                                      ILayoutService layoutService)
         {
             _newsService = newsService;
-            _settingService = settingService;
             _categoryService = categoryService;
             _context = context;
             _layoutService = layoutService;
@@ -132,7 +129,6 @@ namespace BitNews.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostComment(int id, ViewModels.NewsDetailVM model)
         {
-            
                 var comment = new Comment
                 {
                     Name = model.Name,
@@ -146,15 +142,6 @@ namespace BitNews.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Detail", new { id = model.Id });
-
-            // If ModelState is not valid, return the view with the model
-            //return View("Detail", model); // You might need to specify the full view name if needed
         }
-
-
-
-
-
-
     }
 }
